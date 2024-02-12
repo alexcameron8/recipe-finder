@@ -15,3 +15,11 @@ Install Tailwind CSS (https://github.com/tailwindlabs/prettier-plugin-tailwindcs
 `npm install -D tailwindcss postcss autoprefixer`
 
 `npm install -D prettier prettier-plugin-tailwindcss`
+
+Configuring MongoDB Server Instructions:
+Instructions followed from my cluster at https://cloud.mongodb.com/
+`npm install mongodb`
+
+`npm install dotenv`
+
+`npm install react-router-dom`
