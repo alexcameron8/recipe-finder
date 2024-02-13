@@ -24,7 +24,6 @@ export function RecipeListItem({ recipe }) {
     console.log("Test");
     setIsSaved((prev) => !prev);
   }
-
   return (
     <div className="m-2 items-center rounded-xl bg-white p-2 hover:bg-gray-100">
       {isHorizontal ? (

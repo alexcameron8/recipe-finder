@@ -3,6 +3,7 @@ import { fetchRecipes } from "../services/recipes.js";
 import { IoFilter } from "react-icons/io5";
 import { IoMdClose } from "react-icons/io";
 import { Dropdown } from "./Dropdown";
+import { useSearchResults } from "./App";
 
 //Temporary until database is running
 const webLabels = [
@@ -227,10 +228,12 @@ const webLabels = [
   },
 ];
 
-export function Search({ setSearchResults }) {
+export function Search() {
   const [recipeQuery, setRecipeQuery] = useState("");
   const [showFilters, setShowFilters] = useState(false);
   const [isSelected, setIsSelected] = useState([]);
+
+  const { setSearchResults } = useSearchResults();
 
   const handleSearch = async (e) => {
     e.preventDefault();

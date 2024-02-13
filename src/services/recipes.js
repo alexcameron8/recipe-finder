@@ -33,7 +33,7 @@ const fetchRecipeByID = async (recipe_id) => {
     const data = await response.json();
     console.log("Fetch Recipe by ID:");
     console.log(data);
-    return data.hits;
+    return data;
   } catch (error) {
     console.error("Error fetching recipes:", error);
     return [];
