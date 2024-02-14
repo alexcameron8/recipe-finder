@@ -6,6 +6,8 @@ import { createRequire } from "module";
 
 const require = createRequire(import.meta.url);
 const babelRegister = require("@babel/register");
+const cors = require("cors");
+const bodyParser = require("body-parser");
 
 // Register Babel to transpile JSX files on the fly
 babelRegister({
@@ -16,6 +18,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  }),
+);
+app.use(bodyParser.json());
 
 const PORT = process.env.VITE_PORT || 3000;
 app.use("/users", userRoutes);

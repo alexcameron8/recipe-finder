@@ -1,4 +1,5 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
+import bcrypt from "bcrypt";
 
 const VITE_MONGO_URI = "temp";
 
@@ -90,6 +91,91 @@ async function removeDocument(dbName, collectionName, document) {
   }
 }
 
+//Find a user
+async function createUser(user_email, firstName, lastName, user_password) {
+  try {
+    // Connect the client to the server
+    await client.connect();
+
+    const database = client.db("RecipeApp");
+    const collection = database.collection("Users");
+
+    // Hash the password before saving it
+    const hashedPassword = await bcrypt.hash(user_password, 10);
+
+    const new_user = {
+      email: user_email,
+      firstName: firstName,
+      lastName: lastName,
+      passwordHash: hashedPassword,
+      savedRecipes: [],
+    };
+
+    const user = await collection.findOne({
+      email: user_email,
+    });
+
+    if (!user) {
+      addDocument("RecipeApp", "Users", new_user);
+      return { status: true, data: new_user };
+    } else {
+      console.log("Error user already exists! Error message!");
+      return {
+        status: false,
+        data: {
+          errors: [{ msg: "Email already in use with existing account." }],
+        },
+      };
+    }
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+
+//Find a user
+async function findUser(user_email, user_password) {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+
+    const database = client.db("RecipeApp");
+    const collection = database.collection("Users");
+
+    const filter = {
+      email: user_email,
+    };
+    // const cursor = collection.findOne(credentials);
+    const user = await collection.findOne(filter);
+
+    if (!user) {
+      return {
+        status: false,
+        data: { errors: [{ msg: "Email account not found." }] },
+      };
+    } else {
+      //User found - Validating credentials
+      const passwordMatch = await bcrypt.compare(
+        user_password,
+        user.passwordHash,
+      );
+
+      if (!passwordMatch) {
+        return {
+          status: false,
+          data: { errors: [{ msg: "Passwords do not match." }] },
+        };
+      } else {
+        console.log("Authentication successful!");
+        return { status: true, data: user };
+      }
+    }
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+
 //Code to retrieve ID
 // const startIndex = recipe.uri.indexOf("#recipe_");
 // // Extract the substring after #recipe_
@@ -105,4 +191,13 @@ const record = {
 
 // addDocument("RecipeApp", "Users", record).catch(console.dir);
 
-removeDocument("RecipeApp", "Users", record).catch(console.dir);
+// removeDocument("RecipeApp", "Users", record).catch(console.dir);
+// findUser("alex8cameron@gmail.com", "password");
+export {
+  run,
+  findAllDocuments,
+  addDocument,
+  removeDocument,
+  findUser,
+  createUser,
+};
