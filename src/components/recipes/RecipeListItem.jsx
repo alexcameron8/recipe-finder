@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { IoMdAdd, IoMdCheckmark } from "react-icons/io";
 import { useState } from "react";
+import axios from "axios";
 
 /* eslint-disable react/prop-types */
 export function RecipeListItem({ recipe }) {
@@ -20,8 +21,18 @@ export function RecipeListItem({ recipe }) {
     navigate(`/recipe/${recipeId}`);
   }
 
-  function handleSaveClick() {
+  const handleSaveClick = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/recipes/save",
+        recipe,
+      );
+
     setIsSaved((prev) => !prev);
+    console.log(recipe)
+  } catch (error) {
+    // Handle save recipe error (e.g., display error message to user)
+  }
   }
   return (
     <div className="m-2 items-center rounded-xl bg-white p-2 hover:bg-gray-100">

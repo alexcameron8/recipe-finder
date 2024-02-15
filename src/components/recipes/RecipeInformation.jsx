@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchRecipeByID } from "../../services/recipes";
+import { fetchRecipeByID } from "../../services/recipes_api";
 import { Link } from "react-router-dom";
 import { IoMdArrowBack } from "react-icons/io";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";

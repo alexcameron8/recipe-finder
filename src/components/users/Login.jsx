@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useCurrentUserResults } from "../App";
+import { useAlertsContext, useCurrentUserResults } from "../App";
 
 export function Login() {
   const default_errors = {
@@ -14,6 +14,13 @@ export function Login() {
   });
   const [formErrors, setFormErrors] = useState(default_errors);
   const { currentUser, setCurrentUser } = useCurrentUserResults();
+  const {alerts, setAlerts} = useAlertsContext();
+
+  const addAlert = (type, message) => {
+    const newAlerts = [...alerts, { type, message }];
+    setAlerts(newAlerts);
+  };
+
   // Function to update formErrors state
   const updateFormErrors = (fieldName, value) => {
     // Update the specified field with the provided value
@@ -44,6 +51,7 @@ export function Login() {
       // Check status code for response
       if (response.status === 200) {
         setCurrentUser(response.data);
+        addAlert("success", `Login success - Welcome back, ${response.data.firstName}.`)
         navigate("/");
       } else if (response.status === 403) {
         console.log("Status 403");

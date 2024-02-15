@@ -1,6 +1,4 @@
 import { Router } from "express";
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
 import { createUser, findUser } from "../server/connect.js";
 
 // Note: Create static routes to dynamic routes top to bottom

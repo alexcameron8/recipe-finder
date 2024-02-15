@@ -1,5 +1,6 @@
 import express from "express";
 import userRoutes from "./routes/users.js";
+import recipeRoutes from "./routes/recipes.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import { createRequire } from "module";
@@ -27,11 +28,12 @@ app.use(bodyParser.json());
 
 const PORT = process.env.VITE_PORT || 3000;
 app.use("/users", userRoutes);
+app.use("/recipes", recipeRoutes)
 
-app.get("/", (req, res) => {
-  // Send JSX file content as response
-  res.send("Main Page");
-});
+// app.get("/", (req, res) => {
+//   // Send JSX file content as response
+//   res.send("Main Page");
+// });
 
 app.all("*", (req, res) => {
   res.status(404);

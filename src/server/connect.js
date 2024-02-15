@@ -1,6 +1,7 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
 import bcrypt from "bcrypt";
 
+
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 // const client = new MongoClient(process.env.VITE_MONGO_URI, {
 const client = new MongoClient(VITE_MONGO_URI, {
@@ -66,6 +67,7 @@ async function addDocument(dbName, collectionName, document) {
     const result = await collection.insertOne(document);
 
     console.log(`A document was inserted with the _id: ${result.insertedId}`);
+    return result.insertedId;
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
@@ -89,7 +91,7 @@ async function removeDocument(dbName, collectionName, document) {
   }
 }
 
-//Find a user
+//Create a user
 async function createUser(user_email, firstName, lastName, user_password) {
   try {
     // Connect the client to the server
@@ -173,6 +175,60 @@ async function findUser(user_email, user_password) {
   }
 }
 
+async function saveRecipe(recipe) {
+  try {
+    // Connect the client to the server
+    await client.connect();
+
+    const database = client.db("RecipeApp");
+    const collection = database.collection("Recipes");
+
+
+    const recipe_query = await collection.findOne({
+      id: recipe.id,
+    });
+
+    if (!recipe_query) {
+      const new_recipe_doc_id = addDocument("RecipeApp", "Recipes", recipe);
+      To-DO: updateRecipeList (Implement function next session)
+      return { status: true, data: recipe };
+    } else {
+      console.log("Recipe already exists in database! Check if saved in list or not next.");
+      return {
+        status: false,
+        data: {
+          errors: [{ msg: "Email already in use with existing account." }],
+        },
+      };
+    }
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+
+
+async function findAllSavedRecipes(user_id) {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+
+    const database = client.db("RecipeApp");
+    const collection = database.collection("Recipes");
+
+    // const filter = {
+    //   id: user_id,
+    // };
+    // const cursor = collection.findOne(credentials);
+    const recipe_list = await collection.findMany();
+
+    
+    
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
 //Code to retrieve ID
 // const startIndex = recipe.uri.indexOf("#recipe_");
 // // Extract the substring after #recipe_
@@ -197,4 +253,6 @@ export {
   removeDocument,
   findUser,
   createUser,
+  saveRecipe,
+  findAllSavedRecipes
 };

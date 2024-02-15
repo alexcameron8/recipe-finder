@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fetchRecipes } from "../services/recipes.js";
+import { fetchRecipes } from "../services/recipes_api.js";
 import { IoFilter } from "react-icons/io5";
 import { IoMdClose } from "react-icons/io";
 import { Dropdown } from "./Dropdown";

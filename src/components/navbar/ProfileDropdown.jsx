@@ -2,14 +2,25 @@ import { MdAccountCircle } from "react-icons/md";
 import { useState } from "react";
 import { useCurrentUserResults } from "../App";
 import { Link } from "react-router-dom";
+import { useAlertsContext } from "../App";
 
 export function ProfileDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const { currentUser, setCurrentUser } = useCurrentUserResults();
+  const {alerts, setAlerts} = useAlertsContext();
+
+  const addAlert = (type, message) => {
+    const newAlerts = [...alerts, { type, message }];
+    setAlerts(newAlerts);
+  };
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
+  function handleLogOut(){
+    setCurrentUser(null)
+    addAlert("info", "Log out successful.")
+  }
   return (
     <div>
       <button
@@ -35,26 +46,17 @@ export function ProfileDropdown() {
           aria-labelledby="dropdownInformationButton"
         >
           <li>
-            <a
-              href="#"
-              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            >
-              My Recipes
-            </a>
+              <Link onClick={()=>setIsOpen(false)} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" to="/my-recipes">My Recipes</Link>
           </li>
           <li>
-            <a
-              href="#"
-              className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-            >
-              Settings
-            </a>
+          <Link onClick={()=>setIsOpen(false)} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" to="/profile">Profile Settings</Link>
+
           </li>
         </ul>
         <div className="py-2">
           <button
             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
-            onClick={() => setCurrentUser(null)}
+            onClick={handleLogOut}
           >
             <Link to="/login">Logout</Link>
           </button>
