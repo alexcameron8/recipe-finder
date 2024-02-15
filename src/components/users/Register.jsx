@@ -41,7 +41,6 @@ export function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
     try {
       resetFormErrors();
       const response = await axios.post(

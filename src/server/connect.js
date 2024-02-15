@@ -1,8 +1,6 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
 import bcrypt from "bcrypt";
 
-const VITE_MONGO_URI = "temp";
-
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 // const client = new MongoClient(process.env.VITE_MONGO_URI, {
 const client = new MongoClient(VITE_MONGO_URI, {
@@ -166,7 +164,6 @@ async function findUser(user_email, user_password) {
           data: { errors: [{ msg: "Passwords do not match." }] },
         };
       } else {
-        console.log("Authentication successful!");
         return { status: true, data: user };
       }
     }

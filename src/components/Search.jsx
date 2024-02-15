@@ -262,9 +262,9 @@ export function Search() {
 
   return (
     <div className="mx-2 flex flex-col items-center justify-center">
-      <h2 className="mt-4 justify-start text-2xl font-semibold">
+      {/* <h2 className="mt-4 justify-start text-2xl font-semibold">
         Search for Recipes:
-      </h2>
+      </h2> */}
       <form className="flex w-full items-center" onSubmit={handleSearch}>
         <input
           className="mx-1 my-2 flex-1 rounded-md border-0 p-1 shadow-sm ring-1 ring-inset ring-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600"

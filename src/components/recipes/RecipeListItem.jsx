@@ -21,7 +21,6 @@ export function RecipeListItem({ recipe }) {
   }
 
   function handleSaveClick() {
-    console.log("Test");
     setIsSaved((prev) => !prev);
   }
   return (
@@ -35,7 +34,7 @@ export function RecipeListItem({ recipe }) {
             onClick={() => handleShowRecipe(recipe)}
           />
           <div className="flex flex-grow flex-col">
-            <div className="flex-grow">
+            <div className="flex-grow" onClick={() => handleShowRecipe(recipe)}>
               <h3 className="text-xl font-bold">{recipe.label}</h3>
               <p>Calories: {recipe.calories}</p>
             </div>
