@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { createUser, findUser } from "../server/connect.js";
+import {
+  createUser,
+  findAllSavedRecipes,
+  findUser,
+} from "../server/connect.js";
 
 // Note: Create static routes to dynamic routes top to bottom
 const router = Router();
@@ -127,19 +131,23 @@ router.post("/login", sanitizeLoginInput, async (req, res) => {
   }
 });
 
-router
-  .route("/:userId")
-  .get((req, res) => {
-    req.params.userId;
-    res.send(`Get user with ID ${req.params.userId}`);
-  })
-  .put((req, res) => {
-    req.params.userId;
-    res.send(`Update user with ID ${req.params.userId}`);
-  })
-  .delete((req, res) => {
-    req.params.userId;
-    res.send(`Delete user with ID ${req.params.userId}`);
-  });
+router.get("/:userId/savedRecipes", async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    const result = await findAllSavedRecipes(userId);
+    console.log(result);
+    //Add code here
+    if (result) {
+      //user successfully logged in
+      return res.status(200).send(result);
+    } else {
+      //user unsuccessfully logged in
+      return res.status(403).send(result);
+    }
+  } catch (error) {
+    console.error("Error retrieving recipe list:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 export default router;

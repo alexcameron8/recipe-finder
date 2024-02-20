@@ -1,10 +1,8 @@
-import { Search } from "./Search";
+import { Search } from "./Search/Search";
 import { RecipeList } from "./recipes/RecipeList";
-import { useState } from "react";
 export function Home() {
-
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center md:mx-2 md:px-2">
       <Search />
       <RecipeList />
     </div>

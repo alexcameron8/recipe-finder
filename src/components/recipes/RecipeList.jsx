@@ -1,14 +1,35 @@
 import { RecipeListItem } from "./RecipeListItem";
-import { useSearchResults } from "../App";
+import { useCurrentUserResults, useSearchResults } from "../App";
+import { ScrollShadow } from "@nextui-org/react";
 
 export function RecipeList() {
   const { searchResults } = useSearchResults();
+  const { currentUser } = useCurrentUserResults();
 
   return (
-    <div className="flex flex-col items-center">
-      {searchResults?.map((result) => (
-        <RecipeListItem key={result.recipe.uri} recipe={result.recipe} />
-      ))}
+    <div className="flex w-full max-w-screen-xl flex-col items-center">
+      {searchResults?.map((result) => {
+        const startIndex = result.recipe.uri.indexOf("#recipe_");
+        // Extract the substring after #recipe_
+        const recipeId = result.recipe.uri.substring(
+          startIndex + "#recipe_".length,
+        );
+        let isRecipeSaved = false;
+
+        if (currentUser !== null) {
+          isRecipeSaved = currentUser.savedRecipes.some(
+            (savedRecipe) => savedRecipe === recipeId,
+          );
+        }
+
+        return (
+          <RecipeListItem
+            key={result.recipe.uri}
+            recipe={result.recipe}
+            isRecipeSaved={isRecipeSaved}
+          />
+        );
+      })}
     </div>
   );
 }

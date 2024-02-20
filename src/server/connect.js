@@ -1,6 +1,7 @@
-import { MongoClient, ServerApiVersion } from "mongodb";
-import bcrypt from "bcrypt";
+/* eslint no-use-before-define: 0 */ // --> OFF
 
+import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
+import bcrypt from "bcrypt";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 // const client = new MongoClient(process.env.VITE_MONGO_URI, {
@@ -46,10 +47,6 @@ async function findAllDocuments(dbName, collectionName) {
     for await (const doc of cursor) {
       console.log(doc);
     }
-
-    console.log(
-      "Pinged your deployment. You successfully connected to MongoDB!",
-    );
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
@@ -66,14 +63,104 @@ async function addDocument(dbName, collectionName, document) {
 
     const result = await collection.insertOne(document);
 
-    console.log(`A document was inserted with the _id: ${result.insertedId}`);
+    console.log(
+      `addDocument: A document was inserted with the _id: ${result.insertedId}`,
+    );
     return result.insertedId;
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
   }
 }
+async function updateArrayDocument(dbName, collectionName, filter, updateDoc) {
+  try {
+    // Connect the client to the server
+    await client.connect();
 
+    const database = client.db(dbName);
+    const collection = database.collection(collectionName);
+    /* Set the upsert option to insert a document if no documents match
+    the filter */
+    const options = { upsert: true };
+    const result = await collection.updateOne(
+      filter,
+      { $addToSet: updateDoc },
+      options,
+    );
+
+    // Print the number of matching and modified documents
+    console.log(
+      `updateArrayDocument: ${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
+    );
+    return result.matchedCount > 0 || result.modifiedCount > 0;
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+
+async function removeFromArrayDocument(
+  dbName,
+  collectionName,
+  filter,
+  updateDoc,
+) {
+  try {
+    // Connect the client to the server
+    await client.connect();
+
+    const database = client.db(dbName);
+    const collection = database.collection(collectionName);
+
+    // Update options
+    const options = { upsert: true };
+
+    // Use $pull operator to remove an item from the array
+    const result = await collection.updateOne(
+      filter,
+      { $pull: updateDoc },
+      options,
+    );
+
+    // Print the number of matching and modified documents
+    console.log(
+      `removeFromArrayDocument: ${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
+    );
+
+    return result.modifiedCount > 0;
+  } finally {
+    // Ensure that the client will close when you finish/error
+    await client.close();
+  }
+}
+
+async function updateDocument(dbName, collectionName, filter, updateDoc) {
+  try {
+    // Connect the client to the server
+    await client.connect();
+
+    const database = client.db(dbName);
+    const collection = database.collection(collectionName);
+    /* Set the upsert option to insert a document if no documents match
+    the filter */
+    const options = { upsert: true };
+
+    const result = await collection.updateOne(
+      filter,
+      { $set: updateDoc },
+      options,
+    );
+
+    // Print the number of matching and modified documents
+    console.log(
+      `updateDocument: ${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
+    );
+    return result.upsertedId;
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
 async function removeDocument(dbName, collectionName, document) {
   try {
     // Connect the client to the server
@@ -104,6 +191,7 @@ async function createUser(user_email, firstName, lastName, user_password) {
     const hashedPassword = await bcrypt.hash(user_password, 10);
 
     const new_user = {
+      userId: new ObjectId().toString(),
       email: user_email,
       firstName: firstName,
       lastName: lastName,
@@ -183,22 +271,24 @@ async function saveRecipe(recipe) {
     const database = client.db("RecipeApp");
     const collection = database.collection("Recipes");
 
-
     const recipe_query = await collection.findOne({
       id: recipe.id,
     });
 
     if (!recipe_query) {
-      const new_recipe_doc_id = addDocument("RecipeApp", "Recipes", recipe);
-      To-DO: updateRecipeList (Implement function next session)
-      return { status: true, data: recipe };
+      await addDocument("RecipeApp", "Recipes", recipe);
+      return { status: true, data: recipe.id };
     } else {
-      console.log("Recipe already exists in database! Check if saved in list or not next.");
+      console.log(
+        "Recipe already exists in database! Updating existing recipe...",
+      );
+      const filter = {
+        id: recipe.id,
+      };
+      await updateDocument("RecipeApp", "Recipes", filter, recipe); //update recipe in case recipe has changed
       return {
-        status: false,
-        data: {
-          errors: [{ msg: "Email already in use with existing account." }],
-        },
+        status: true,
+        data: recipe.id,
       };
     }
   } finally {
@@ -207,23 +297,50 @@ async function saveRecipe(recipe) {
   }
 }
 
-
-async function findAllSavedRecipes(user_id) {
+async function findAllSavedRecipes(userId) {
   try {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
     const database = client.db("RecipeApp");
-    const collection = database.collection("Recipes");
+    const collection = database.collection("Users");
 
-    // const filter = {
-    //   id: user_id,
-    // };
-    // const cursor = collection.findOne(credentials);
-    const recipe_list = await collection.findMany();
+    const filter = {
+      userId: userId,
+    };
+    console.log(filter);
+    const options = {
+      // Include only the `title` and `imdb` fields in the returned document
+      projection: { _id: 0, savedRecipes: 1 },
+    };
 
-    
-    
+    const recipe_list = await collection.findOne(filter, options);
+    console.log(recipe_list);
+    const collection_recipes = database.collection("Recipes");
+    const options_recipes = {
+      // Include only the `title` and `imdb` fields in the returned document
+      projection: {
+        _id: 0,
+        id: 1,
+        name: 1,
+        image: 1,
+        source: 1,
+        totalTime: 1,
+        shareAs: 1,
+        healthLabels: 1,
+        ingredientLines: 1,
+        calories: 1,
+        totalNutrients: 1,
+        dishType: 1,
+      },
+    };
+
+    //Query collection_recipes and retrieve all documents related to all ids queried from recipe_list
+    const recipes = await collection_recipes
+      .find({ id: { $in: recipe_list.savedRecipes } })
+      .toArray();
+
+    return recipes; // Return the savedRecipes array
   } finally {
     // Ensures that the client will close when you finish/error
     await client.close();
@@ -254,5 +371,8 @@ export {
   findUser,
   createUser,
   saveRecipe,
-  findAllSavedRecipes
+  findAllSavedRecipes,
+  updateArrayDocument,
+  updateDocument,
+  removeFromArrayDocument,
 };

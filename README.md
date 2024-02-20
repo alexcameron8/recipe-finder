@@ -24,6 +24,13 @@ Instructions followed from my cluster at https://cloud.mongodb.com/
 
 `npm install react-router-dom`
 
+NextUI:
+`npm i @nextui-org/react framer-motion`
+
+Carousel Library:
+
+`npm i react-multi-carousel`
+
 ## Case Study
 
 ### Overview

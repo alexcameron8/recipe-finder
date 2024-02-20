@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAlertsContext, useCurrentUserResults } from "../App";
+import { MdOutlineEmail, MdLockOutline } from "react-icons/md";
+import { Spinner, Input, Checkbox, Button, useInput } from "@nextui-org/react";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
 export function Login() {
   const default_errors = {
@@ -12,15 +15,17 @@ export function Login() {
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
   const [formErrors, setFormErrors] = useState(default_errors);
   const { currentUser, setCurrentUser } = useCurrentUserResults();
-  const {alerts, setAlerts} = useAlertsContext();
+  const { alerts, setAlerts } = useAlertsContext();
+  const [isVisible, setIsVisible] = useState(false);
+  const toggleVisibility = () => setIsVisible(!isVisible);
 
   const addAlert = (type, message) => {
     const newAlerts = [...alerts, { type, message }];
     setAlerts(newAlerts);
   };
-
   // Function to update formErrors state
   const updateFormErrors = (fieldName, value) => {
     // Update the specified field with the provided value
@@ -38,8 +43,26 @@ export function Login() {
       [e.target.name]: e.target.value,
     });
   };
+  const validateEmail = (value) => {
+    return value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
+  };
+
+  const helper = useMemo(() => {
+    if (!formData.email) {
+      return {
+        text: "",
+        color: "",
+      };
+    }
+    const isValid = validateEmail(formData.email);
+    return {
+      text: isValid ? "Correct email" : "Enter a valid email",
+      color: isValid ? "success" : "error",
+    };
+  }, [formData]);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
     try {
       resetFormErrors();
@@ -51,21 +74,28 @@ export function Login() {
       // Check status code for response
       if (response.status === 200) {
         setCurrentUser(response.data);
-        addAlert("success", `Login success - Welcome back, ${response.data.firstName}.`)
+        addAlert(
+          "success",
+          `Login success - Welcome back, ${response.data.firstName}.`,
+        );
+        setIsLoading(false);
         navigate("/");
       } else if (response.status === 403) {
         console.log("Status 403");
         // Data error message
         console.error("Data error:", response.data);
+        setIsLoading(false);
         // Display error message to user
       } else if (response.status === 500) {
         console.log("Status 500");
         // Registration error failure
         console.error("Login failure:", response.data);
+        setIsLoading(false);
         // Display error message to user
       } else {
         console.log("Status unknown");
         console.log("Login response:", response);
+        setIsLoading(false);
       }
     } catch (error) {
       // Handle login error (e.g., display error message to user)
@@ -84,60 +114,92 @@ export function Login() {
             console.log(`Error ${index + 1}: ${error.msg}`);
           }
         });
+        setIsLoading(false);
       } else {
         // Data error message
         console.error("Data errors:", error.response.data);
       }
+      setIsLoading(false);
     }
   };
   return (
-    <div className="flex h-min items-center justify-center">
-      <form className="mt-5 w-2/3" onSubmit={handleSubmit}>
-        <fieldset className="flex flex-col">
-          <h2 className="text-center text-2xl font-semibold">Login</h2>
-          <label className="ml-1 font-medium" htmlFor="email">
-            Email Address:
-          </label>
-          {formErrors.email && (
-            <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
-              * Invalid email format
-            </span>
-          )}
-          <input
-            className="mx-1 my-2 block rounded-md border-0 p-1 shadow-sm ring-1 ring-inset ring-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-            type="text"
-            id="email"
-            name="email"
-            placeholder="john@doe.com"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-          <label className="ml-1 font-medium" htmlFor="password">
-            Password
-          </label>
-          {formErrors.password && (
-            <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
-              * Invalid credentials. Please try again.
-            </span>
-          )}
-          <input
-            className="mx-1 my-2 block rounded-md border-0 p-1 shadow-sm ring-1 ring-inset ring-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Must have at least 6 characters"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-          <input
-            className="mt-3 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            type="submit"
-            value="Login"
-          />
-        </fieldset>
-      </form>
-    </div>
+    <>
+      {isLoading ? (
+        <div className="flex h-screen flex-col items-center justify-center">
+          <Spinner size="md" />
+        </div>
+      ) : (
+        <div className="flex h-min items-center justify-center">
+          <form className="mt-5 w-2/3" onSubmit={handleSubmit}>
+            <fieldset className="flex flex-col gap-2">
+              <h2 className="text-center text-2xl font-semibold">
+                Welcome to <span className="font-bold">RecipeApp</span>
+              </h2>
+              {formErrors.email && (
+                <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
+                  * Invalid email format
+                </span>
+              )}
+              <Input
+                name="email"
+                id="email"
+                status={helper.color}
+                color={helper.color}
+                helperColor={helper.color}
+                errorMessage={helper.color === "error" && helper.text}
+                variant="faded"
+                type="email"
+                label="Email"
+                placeholder="Email address"
+                labelPlaceholder="email"
+                endContent={<MdOutlineEmail />}
+                isRequired
+                onChange={handleChange}
+              />
+              {formErrors.password && (
+                <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
+                  * Invalid credentials. Please try again.
+                </span>
+              )}
+              <Input
+                name="password"
+                id="password"
+                variant="faded"
+                type={isVisible ? "text" : "password"}
+                label="Password"
+                placeholder="Must have at least 6 characters"
+                // endContent={<MdLockOutline />}
+                endContent={
+                  <button
+                    className="focus:outline-none"
+                    type="button"
+                    onClick={toggleVisibility}
+                  >
+                    {isVisible ? <IoMdEye /> : <IoMdEyeOff />}
+                  </button>
+                }
+                // visibleIcon={<IoMdEye />}
+                // hiddenIcon={<IoMdEyeOff />}
+                isRequired
+                onChange={handleChange}
+              />
+              <div className="flex w-full justify-end">
+                <a className="flex items-center text-xs no-underline hover:cursor-pointer hover:font-semibold hover:underline">
+                  Forgot Password?
+                </a>
+              </div>
+              <Button
+                className="w-full"
+                type="submit"
+                value="Login"
+                color="primary"
+              >
+                Login
+              </Button>
+            </fieldset>
+          </form>
+        </div>
+      )}
+    </>
   );
 }
