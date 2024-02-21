@@ -3,6 +3,7 @@ import {
   saveRecipe,
   updateArrayDocument,
   removeFromArrayDocument,
+  findAllFeaturedRecipes,
 } from "../server/connect.js";
 
 const router = Router();
@@ -21,6 +22,9 @@ router.post("/save", async (req, res) => {
     totalTime,
     totalNutrients,
     dishType,
+    mealType,
+    cuisineType,
+    dietLabels,
   } = recipe;
 
   const startIndex = uri.indexOf("#recipe_");
@@ -39,6 +43,10 @@ router.post("/save", async (req, res) => {
     calories: calories,
     totalNutrients: totalNutrients,
     dishType: dishType,
+    mealType: mealType,
+    cuisineType: cuisineType,
+    dietLabels: dietLabels,
+    featured: true,
   };
   try {
     const result = await saveRecipe(recipe_doc);
@@ -71,9 +79,14 @@ router.post("/save", async (req, res) => {
 
 router.put("/remove", async (req, res) => {
   const { recipe, user } = req.body;
-  const startIndex = recipe.uri.indexOf("#recipe_");
-  // Extract the substring after #recipe_
-  const recipeId = recipe.uri.substring(startIndex + "#recipe_".length);
+  let recipeId;
+  if (typeof recipe.id !== "undefined") {
+    recipeId = recipe.id;
+  } else {
+    const startIndex = recipe.uri.indexOf("#recipe_");
+    // Extract the substring after #recipe_
+    recipeId = recipe.uri.substring(startIndex + "#recipe_".length);
+  }
 
   try {
     const filter = { email: user.email };
@@ -98,6 +111,23 @@ router.put("/remove", async (req, res) => {
     }
   } catch (error) {
     console.error("Error saving recipe:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+router.get("/featured", async (req, res) => {
+  try {
+    const result = await findAllFeaturedRecipes();
+
+    if (result) {
+      //featured recipes successfully retrieved
+      return res.status(200).send(result);
+    } else {
+      //featured recipes unsuccessfully retrieved
+      return res.status(403).send(result);
+    }
+  } catch (error) {
+    console.error("Error retrieving featured recipes:", error);
     return res.status(500).json({ message: "Internal server error" });
   }
 });

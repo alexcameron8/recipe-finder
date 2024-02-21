@@ -1,53 +1,70 @@
-import { Divider } from "@nextui-org/react";
-import Carousel from "react-multi-carousel";
+import { Divider, Button, ButtonGroup } from "@nextui-org/react";
+import { FeaturedRecipeCard } from "./recipes/FeaturedRecipeCard";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { useState } from "react";
 
 export function RecipeCarousel({ header, subheader, data }) {
-  const responsive = {
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3,
-      slidesToSlide: 3, // optional, default to 1.
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2,
-      slidesToSlide: 2, // optional, default to 1.
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-      slidesToSlide: 1, // optional, default to 1.
-    },
+  let randomData;
+  // if (data) {
+  //   // Shuffle the featured recipe data
+  //   const shuffledData = [...data].sort(() => Math.random() - 0.5);
+  //   console.log(shuffledData);
+  //   // Slice the array to contain only 5 random indices
+  //   randomData = shuffledData.slice(0, 5);
+  // } else {
+  //   randomData = [];
+  // }
+  randomData = data;
+
+  const [startIndex, setStartIndex] = useState(0);
+
+  const handlePrev = () => {
+    setStartIndex((prevIndex) =>
+      prevIndex === 0 ? randomData?.length - 1 : prevIndex - 1,
+    );
   };
+
+  const handleNext = () => {
+    setStartIndex((prevIndex) =>
+      prevIndex === randomData?.length - 1 ? 0 : prevIndex + 1,
+    );
+  };
+
   return (
     <>
       <h2 className="text-2xl font-semibold">{header}</h2>
       <Divider className="my-2" />
       <h6 className="text-sm font-thin">{subheader}</h6>
-      <div>
-        <Carousel
-          swipeable={true}
-          draggable={false}
-          showDots={true}
-          responsive={responsive}
-          // ssr={true} // means to render carousel on server-side.
-          infinite={true}
-          // autoPlay={this.props.deviceType !== "mobile" ? true : false}
-          autoPlaySpeed={1000}
-          keyBoardControl={true}
-          customTransition="all .5"
-          transitionDuration={500}
-          containerClass="carousel-container"
-          // removeArrowOnDeviceType={["tablet", "mobile"]}
-          // deviceType={this.props.deviceType}
-          dotListClass="custom-dot-list-style"
-          itemClass="carousel-item-padding-40-px"
-        >
-          <div>Item 1</div>
-          <div>Item 2</div>
-          <div>Item 3</div>
-          <div>Item 4</div>
-        </Carousel>
+      <div className="flex flex-row gap-2 overflow-hidden p-2">
+        {randomData?.map((result, index) => {
+          const currentIndex = (index + startIndex) % randomData.length;
+          return (
+            <motion.div
+              key={result.id}
+              initial={{ opacity: 0, x: -100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 100 }}
+              transition={{ duration: 0.5 }}
+            >
+              <FeaturedRecipeCard
+                key={result.id}
+                recipe={randomData[currentIndex]}
+                isRecipeSaved={false}
+              />
+            </motion.div>
+          );
+        })}
+      </div>
+      <div className="m-2 flex items-center justify-center">
+        <ButtonGroup className="gap-1">
+          <Button size="sm" onClick={handlePrev}>
+            <FaArrowLeft />
+          </Button>
+          <Button size="sm" onClick={handleNext}>
+            <FaArrowRight />
+          </Button>
+        </ButtonGroup>
       </div>
     </>
   );

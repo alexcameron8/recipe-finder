@@ -11,7 +11,7 @@ import {
 } from "react-icons/md";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { Chip } from "@nextui-org/react";
-import { CircularProgress } from "@nextui-org/react";
+import { CircularProgress, Card } from "@nextui-org/react";
 
 const mealTypes = {
   breakfast: "warning",
@@ -140,31 +140,35 @@ export function RecipeListItem({ recipe, isRecipeSaved }) {
       setIsSaved((prev) => !prev);
     }
   };
-  const styles =
-    "m-2 items-center rounded-xl bg-white p-2 hover:bg-gray-100 " +
-    getColor(recipe.mealType[0]);
+
   return (
-    <div className="m-2 w-full max-w-screen-2xl items-center rounded-xl bg-white p-2 shadow-sm shadow-black/30 hover:bg-gray-100">
+    <div className="m-2 w-full max-w-screen-2xl items-center rounded-xl shadow-sm shadow-black/30 ">
       {/* <div className={styles}> */}
-      <div key={recipe.uri} className="flex flex-row">
+      <Card isHoverable key={recipe.uri} className="flex flex-row">
         <img
-          className="mr-2 size-1/3 rounded-xl"
+          className="mr-2 size-1/3 rounded-3xl p-4"
           src={recipe.image}
           alt={recipe.label}
           onClick={() => handleShowRecipe(recipe)}
         />
-        <div className="flex flex-grow flex-col">
+        <div className="flex flex-grow flex-col py-4 pr-4">
           <div className="flex-grow" onClick={() => handleShowRecipe(recipe)}>
-            <h3 className="text-xl font-bold">{recipe.label}</h3>
-            <p>
-              {recipe.dishType}, {recipe.cuisineType}
-            </p>
-            <p className="font-semibold">
-              Calories: {recipe.calories.toFixed(0)}
-            </p>
+            <h3 className="pb-2 text-base font-bold sm:text-xl md:text-2xl">
+              {recipe.label}
+            </h3>
             <Chip color={getColor(recipe.mealType[0])}>
               {getMealName(recipe.mealType[0])}
             </Chip>
+            <p>
+              {recipe.dishType}, {recipe.cuisineType}
+            </p>
+          </div>
+          <p className="font-semibold">
+            Calories: {recipe.calories.toFixed(0)}
+          </p>
+          <p className="font-semibold">Servings: {recipe.yield}</p>
+          <div className="py-2 font-light">
+            <p>{recipe.healthLabels.sort().join(" • ")}</p>
           </div>
           {currentUser !== null && (
             <div className="flex justify-end">
@@ -187,7 +191,7 @@ export function RecipeListItem({ recipe, isRecipeSaved }) {
             </div>
           )}
         </div>
-      </div>
+      </Card>
     </div>
   );
 }

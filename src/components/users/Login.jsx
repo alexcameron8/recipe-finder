@@ -2,9 +2,10 @@ import { useState, useMemo } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAlertsContext, useCurrentUserResults } from "../App";
-import { MdOutlineEmail, MdLockOutline } from "react-icons/md";
-import { Spinner, Input, Checkbox, Button, useInput } from "@nextui-org/react";
+import { MdOutlineEmail } from "react-icons/md";
+import { Spinner, Input, Button } from "@nextui-org/react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 export function Login() {
   const default_errors = {
@@ -125,14 +126,17 @@ export function Login() {
   return (
     <>
       {isLoading ? (
-        <div className="flex h-screen flex-col items-center justify-center">
+        <div className=" flex h-screen min-h-screen flex-col items-center justify-center">
           <Spinner size="md" />
         </div>
       ) : (
-        <div className="flex h-min items-center justify-center">
-          <form className="mt-5 w-2/3" onSubmit={handleSubmit}>
+        <div className="flex h-min min-h-screen items-start justify-center">
+          <form
+            className="mt-5 w-2/3 rounded-2xl p-8 shadow-md"
+            onSubmit={handleSubmit}
+          >
             <fieldset className="flex flex-col gap-2">
-              <h2 className="text-center text-2xl font-semibold">
+              <h2 className="mb-6 text-center text-2xl font-semibold">
                 Welcome to <span className="font-bold">RecipeApp</span>
               </h2>
               {formErrors.email && (
@@ -196,6 +200,15 @@ export function Login() {
               >
                 Login
               </Button>
+              <div className="flex w-full justify-end text-xs">
+                Not registered yet?&nbsp;
+                <Link
+                  className="flex items-center text-xs underline hover:cursor-pointer hover:font-semibold"
+                  to="/register"
+                >
+                  Create account
+                </Link>
+              </div>
             </fieldset>
           </form>
         </div>

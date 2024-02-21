@@ -346,12 +346,24 @@ async function findAllSavedRecipes(userId) {
     await client.close();
   }
 }
-//Code to retrieve ID
-// const startIndex = recipe.uri.indexOf("#recipe_");
-// // Extract the substring after #recipe_
-// const recipeId = recipe.uri.substring(startIndex + "#recipe_".length);
 
-// findAllDocuments("RecipeApp", "Users").catch(console.dir);
+async function findAllFeaturedRecipes() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+
+    const database = client.db("RecipeApp");
+    const collection_recipes = database.collection("Recipes");
+
+    //Query recipes database and retrieve all documents flagged with featured
+    const recipes = await collection_recipes.find({ featured: true }).toArray();
+
+    return recipes; // Return the featured recipes array
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
 
 const record = {
   name: "Demo",
@@ -375,4 +387,5 @@ export {
   updateArrayDocument,
   updateDocument,
   removeFromArrayDocument,
+  findAllFeaturedRecipes,
 };

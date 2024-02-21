@@ -1,7 +1,10 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import axios from "axios";
 import { useCurrentUserResults } from "../App";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { Spinner, Input, Checkbox, Button, useInput } from "@nextui-org/react";
+import { MdOutlineEmail } from "react-icons/md";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
 export function Register() {
   const default_errors = {
@@ -19,8 +22,9 @@ export function Register() {
     confirmPassword: "",
   });
   const [formErrors, setFormErrors] = useState(default_errors);
-
+  const [isVisible, setIsVisible] = useState(false);
   const { setCurrentUser } = useCurrentUserResults();
+  const toggleVisibility = () => setIsVisible(!isVisible);
   const updateFormErrors = (fieldName, value) => {
     // Update the specified field with the provided value
     setFormErrors((prevState) => ({
@@ -37,6 +41,23 @@ export function Register() {
       [e.target.name]: e.target.value,
     });
   };
+  const validateEmail = (value) => {
+    return value.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,4}$/i);
+  };
+
+  const helper = useMemo(() => {
+    if (!formData.email) {
+      return {
+        text: "",
+        color: "",
+      };
+    }
+    const isValid = validateEmail(formData.email);
+    return {
+      text: isValid ? "Correct email" : "Enter a valid email",
+      color: isValid ? "success" : "error",
+    };
+  }, [formData]);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -88,106 +109,126 @@ export function Register() {
     }
   };
   return (
-    <div className="flex h-min items-center justify-center">
+    <div className="flex h-min min-h-screen items-start justify-center">
       <form className="mt-5 w-2/3" onSubmit={handleSubmit}>
-        <fieldset className="flex flex-col">
-          <h2 className="text-center text-2xl font-semibold">Register</h2>
-          <label className="font-medium" htmlFor="firstName">
-            First Name:
-          </label>
+        <fieldset className="flex flex-col gap-2">
+          <h2 className="text-center text-2xl font-semibold">
+            Register with <span className="font-bold">RecipeApp</span>
+          </h2>
           {formErrors.firstName && (
             <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
               * Contains invalid characters.
             </span>
           )}
-          <input
-            className="mx-1 my-2 block rounded-md border-0 p-1 shadow-sm ring-1 ring-inset ring-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-            type="text"
-            id="firstName"
+          <Input
             name="firstName"
+            id="firstName"
+            // status={helper.color}
+            // color={helper.color}
+            // helperColor={helper.color}
+            // errorMessage={helper.color === "error" && helper.text}
+            variant="faded"
+            type="text"
+            label="First Name"
+            labelPlacement="outside"
             placeholder="Enter First Name..."
-            value={formData.firstName}
+            endContent={<MdOutlineEmail />}
+            isRequired
             onChange={handleChange}
-            required
           />
-          <label className="font-medium" htmlFor="lastName">
-            Last Name:
-          </label>
           {formErrors.lastName && (
             <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
               * Contains invalid characters.
             </span>
           )}
-          <input
-            className="mx-1 my-2 block rounded-md border-0 p-1 shadow-sm ring-1 ring-inset ring-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-            type="text"
-            id="lastName"
+          <Input
             name="lastName"
+            id="lastName"
+            // status={helper.color}
+            // color={helper.color}
+            // helperColor={helper.color}
+            // errorMessage={helper.color === "error" && helper.text}
+            variant="faded"
+            type="text"
+            label="Last Name"
+            labelPlacement="outside"
             placeholder="Enter Last Name..."
-            value={formData.lastName}
+            endContent={<MdOutlineEmail />}
+            isRequired
             onChange={handleChange}
-            required
           />
-          <label className="font-medium" htmlFor="email">
-            Email Address:
-          </label>
           {formErrors.email && (
             <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
               * Invalid email format.
             </span>
           )}
-          <input
-            className="mx-1 my-2 block rounded-md border-0 p-1 shadow-sm ring-1 ring-inset ring-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-            type="text"
-            id="email"
+          <Input
             name="email"
-            placeholder="john@doe.com"
-            value={formData.email}
+            id="email"
+            status={helper.color}
+            color={helper.color}
+            helperColor={helper.color}
+            errorMessage={helper.color === "error" && helper.text}
+            variant="faded"
+            type="email"
+            label="Email"
+            labelPlacement="outside"
+            placeholder="Email address"
+            endContent={<MdOutlineEmail />}
+            isRequired
             onChange={handleChange}
-            required
           />
-          <label className="font-medium" htmlFor="password">
-            Password
-          </label>
+
           {formErrors.password && (
             <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
               * Password must be at least 6 characters and contain at least one
               number, one character, and one symbol
             </span>
           )}
-          <input
-            className="mx-1 my-2 block rounded-md border-0 p-1 shadow-sm ring-1 ring-inset ring-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-            type="password"
-            id="password"
+          <Input
             name="password"
+            id="password"
+            variant="faded"
+            type={isVisible ? "text" : "password"}
+            label="Password"
+            labelPlacement="outside"
             placeholder="Must have at least 6 characters"
-            value={formData.password}
+            endContent={
+              <button
+                className="focus:outline-none"
+                type="button"
+                onClick={toggleVisibility}
+              >
+                {isVisible ? <IoMdEye /> : <IoMdEyeOff />}
+              </button>
+            }
+            isRequired
             onChange={handleChange}
-            required
           />
-          <label className="ml-1 font-medium" htmlFor="confirmPassword">
-            Confirm Password
-          </label>
           {formErrors.confirmPassword && (
             <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
               * Passwords do not match
             </span>
           )}
-          <input
-            className="mx-1 my-2 block rounded-md border-0 p-1 shadow-sm ring-1 ring-inset ring-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600"
-            type="password"
-            id="confirmPassword"
+          <Input
             name="confirmPassword"
+            id="confirmPassword"
+            variant="faded"
+            type={isVisible ? "text" : "password"}
+            label="Confirm Password"
+            labelPlacement="outside"
             placeholder="Passwords must match"
-            value={formData.confirmPassword}
+            isRequired
             onChange={handleChange}
-            required
           />
-          <input
-            className="mt-3 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          <Button
+            className="w-full"
             type="submit"
             value="Register"
-          />
+            color="primary"
+          >
+            Register
+          </Button>
         </fieldset>
       </form>
     </div>

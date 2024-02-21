@@ -7,7 +7,7 @@ export function RecipeList() {
   const { currentUser } = useCurrentUserResults();
 
   return (
-    <div className="flex w-full max-w-screen-xl flex-col items-center">
+    <div className="flex min-h-screen w-full max-w-screen-xl flex-col items-center">
       {searchResults?.map((result) => {
         const startIndex = result.recipe.uri.indexOf("#recipe_");
         // Extract the substring after #recipe_

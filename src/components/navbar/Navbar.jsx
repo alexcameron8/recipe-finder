@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 import { useCurrentUserResults } from "../App";
 import { ProfileDropdown } from "./ProfileDropdown";
 import { LuChefHat } from "react-icons/lu";
-import { IoHomeOutline, IoHeartOutline } from "react-icons/io5";
-import { MdOutlineExplore } from "react-icons/md";
+import { IoHomeOutline, IoHomeSharp, IoHeartOutline } from "react-icons/io5";
+import { IoMdHeart } from "react-icons/io";
+import { MdOutlineExplore, MdExplore } from "react-icons/md";
 import { useState } from "react";
 import {
   Navbar,
@@ -34,8 +35,9 @@ export function Nav() {
 
   return (
     <>
-      <div className="align-center flex flex-row px-2">
+      <div className="align-center flex flex-row">
         <Navbar
+          maxWidth="xl"
           onMenuOpenChange={setIsMenuOpen}
           classNames={{
             item: [
@@ -66,7 +68,7 @@ export function Nav() {
               </Link>
             </h2>
           </NavbarBrand>
-          <NavbarContent className=" hidden gap-4 sm:flex" justify="center">
+          <NavbarContent className=" hidden gap-10 sm:flex" justify="center">
             <NavbarItem className="py-2" isActive={curTab === "home"}>
               <Link
                 className="flex flex-row items-center font-semibold"
@@ -74,7 +76,7 @@ export function Nav() {
                 color="foreground"
                 to="/"
               >
-                <IoHomeOutline />
+                {curTab === "home" ? <IoHomeSharp /> : <IoHomeOutline />}
                 &nbsp;Home
               </Link>
             </NavbarItem>
@@ -84,7 +86,7 @@ export function Nav() {
                 onClick={() => setCurTab("explore")}
                 to="/explore"
               >
-                <MdOutlineExplore />
+                {curTab === "explore" ? <MdExplore /> : <MdOutlineExplore />}
                 &nbsp;Explore
               </Link>
             </NavbarItem>
@@ -96,7 +98,11 @@ export function Nav() {
                   color="foreground"
                   to="/my-recipes"
                 >
-                  <IoHeartOutline />
+                  {curTab === "my-recipes" ? (
+                    <IoMdHeart color="#f31260" />
+                  ) : (
+                    <IoHeartOutline />
+                  )}
                   &nbsp;My Recipes
                 </Link>
               </NavbarItem>

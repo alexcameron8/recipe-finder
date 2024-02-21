@@ -135,8 +135,7 @@ router.get("/:userId/savedRecipes", async (req, res) => {
   const userId = req.params.userId;
   try {
     const result = await findAllSavedRecipes(userId);
-    console.log(result);
-    //Add code here
+
     if (result) {
       //user successfully logged in
       return res.status(200).send(result);

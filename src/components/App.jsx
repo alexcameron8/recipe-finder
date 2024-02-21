@@ -10,6 +10,7 @@ import { UserRecipeList } from "./recipes/UserRecipeList";
 import { Profile } from "./users/Profile";
 import { NextUIProvider } from "@nextui-org/react";
 import { Explore } from "./Explore";
+import { Footer } from "./Footer/Footer";
 
 // Create a context
 const SearchResultsContext = createContext();
@@ -45,6 +46,7 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/recipe/:id" element={<RecipeInformation />} />
               </Routes>
+              <Footer />
             </SearchResultsContext.Provider>
           </AlertContext.Provider>
         </CurrentUserContext.Provider>

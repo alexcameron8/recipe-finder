@@ -14,7 +14,7 @@ import {
 import { IoTimerOutline } from "react-icons/io5";
 
 /* eslint-disable react/prop-types */
-export function UserRecipeListItem({ recipe, isRecipeSaved }) {
+export function FeaturedRecipeCard({ recipe, isRecipeSaved }) {
   const [isSaved, setIsSaved] = useState(isRecipeSaved);
   const [isSaving, setIsSaving] = useState(false);
   const navigate = useNavigate();
@@ -56,42 +56,42 @@ export function UserRecipeListItem({ recipe, isRecipeSaved }) {
       <CardHeader className="relative flex">
         <img
           src={recipe.image}
-          className="mx-4 mt-2 flex  w-full items-center justify-center rounded-xl object-cover"
+          className="flex h-full items-center justify-center rounded-xl object-cover"
           alt={recipe.name}
         />
-        {recipe.totalTime > 0 && (
-          <Chip className="absolute bottom-0 left-0 mb-6 ml-10 ">
+        <div className="flex flex-row items-center">
+          <Chip color="default" className="absolute bottom-0 left-0 mb-6 ml-8 ">
             <div className="flex flex-row items-center font-semibold">
-              <IoTimerOutline /> &nbsp;{recipe.totalTime} mins
+              <IoTimerOutline /> &nbsp;
+              {recipe.totalTime > 0 ? recipe.totalTime + " mins" : "N/A"}
             </div>
           </Chip>
-        )}
-        <div className="absolute right-0 top-0 mr-10 mt-6 flex">
-          <button
-            className="flex items-center rounded-full p-1 text-3xl hover:bg-default"
-            onClick={handleSaveClick}
-          >
-            {isSaving ? (
-              <CircularProgress
-                size="sm"
-                color="danger"
-                aria-label="Loading..."
-              />
-            ) : isSaved ? (
-              <IoMdHeart color="#f31260" />
-            ) : (
-              <IoMdHeartEmpty />
-            )}
-          </button>
+
+          <div className="absolute bottom-0 right-0 mb-6 mr-8">
+            <button
+              className="flex items-center rounded-full bg-default p-1 text-xl hover:bg-default-100"
+              onClick={handleSaveClick}
+            >
+              {isSaving ? (
+                <CircularProgress
+                  size="sm"
+                  color="danger"
+                  aria-label="Loading..."
+                />
+              ) : isSaved ? (
+                <IoMdHeart color="#f31260" />
+              ) : (
+                <IoMdHeartEmpty />
+              )}
+            </button>
+          </div>
         </div>
       </CardHeader>
       <CardBody>
-        <div className="mx-4 text-base font-bold sm:text-sm md:text-lg lg:text-xl ">
-          {recipe.name}
-        </div>
+        <div className="mx-2 text-base font-bold ">{recipe.name}</div>
       </CardBody>
       <CardFooter>
-        <div className="mx-4 flex flex-row gap-1">
+        <div className="flex flex-row">
           <Chip>{recipe.mealType}</Chip>
           <Chip>{recipe.dishType}</Chip>
           <Chip>{recipe.cuisineType}</Chip>
