@@ -69,10 +69,10 @@ export function Explore() {
         </div>
       ) : (
         <div className="max-w-screen-xl">
-          <RecipeCarousel
+          {/* <RecipeCarousel
             header="Featured Recipes"
             subheader="Not sure what you are looking for? Check out some of these recipes!"
-          />
+          /> */}
           <RecipeCarousel
             header="Breakfast"
             subheader="Popular recipes enjoyed by others!"

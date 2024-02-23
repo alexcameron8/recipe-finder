@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 
 const PORT = process.env.VITE_PORT || 3000;
 app.use("/users", userRoutes);
-app.use("/recipes", recipeRoutes)
+app.use("/recipes", recipeRoutes);
 
 // app.get("/", (req, res) => {
 //   // Send JSX file content as response

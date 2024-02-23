@@ -2,10 +2,14 @@
 
 import { MongoClient, ServerApiVersion, ObjectId } from "mongodb";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+dotenv.config();
+
+const mongoURI = process.env.VITE_MONGO_URI;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 // const client = new MongoClient(process.env.VITE_MONGO_URI, {
-const client = new MongoClient(VITE_MONGO_URI, {
+const client = new MongoClient(mongoURI, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
