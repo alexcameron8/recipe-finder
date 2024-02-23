@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { fetchRecipeByID } from "../../services/recipes";
+import { fetchRecipeByID } from "../../services/recipes_api";
 import { Link } from "react-router-dom";
 import { IoMdArrowBack } from "react-icons/io";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
@@ -46,6 +46,7 @@ export function RecipeInformation() {
               {recipeInfo.recipe.label}
             </h2>
             <h3 className="font-medium">Author: {recipeInfo.recipe.source}</h3>
+            <hr className="my-3 h-0.5 rounded border-0 bg-gray-600" />
             {recipeInfo.recipe.totalTime > 0 && (
               <h4 className=" flex flex-row items-center font-light">
                 <IoTimerOutline /> &nbsp;
@@ -79,9 +80,10 @@ export function RecipeInformation() {
                   <h3>Health & Allergens</h3>
                 </Tab>
               </TabList>
+              <hr className="h-px rounded border-0 bg-gray-300" />
               <TabPanel>
                 <div>
-                  <ol className="list-inside list-decimal">
+                  <ol className="my-3 list-inside list-decimal">
                     {recipeInfo.recipe.ingredientLines.map(
                       (ingredient, index) => (
                         <li className="text-sm" key={index}>
@@ -93,7 +95,7 @@ export function RecipeInformation() {
                 </div>
               </TabPanel>
               <TabPanel>
-                <div className="flex items-center justify-center p-1">
+                <div className="my-3 flex items-center justify-center p-1">
                   <table className="w-full table-auto border-collapse border border-gray-500">
                     <thead>
                       <tr>
@@ -125,7 +127,7 @@ export function RecipeInformation() {
               </TabPanel>
               <TabPanel>
                 <div>
-                  <ol className="list-inside list-decimal">
+                  <ol className="my-3 list-inside list-decimal">
                     {recipeInfo.recipe.healthLabels.map(
                       (healthLabel, index) => (
                         <li className="text-sm" key={index}>

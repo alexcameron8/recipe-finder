@@ -5,6 +5,8 @@ import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
+    <main className="bg-background text-foreground light">
+      <App />
+    </main>
   </React.StrictMode>,
 );
