@@ -193,10 +193,10 @@ export function Login() {
                 </a>
               </div>
               <Button
-                className="w-full"
+                className="mt-5 w-full font-semibold"
                 type="submit"
                 value="Login"
-                color="primary"
+                color="warning"
               >
                 Login
               </Button>

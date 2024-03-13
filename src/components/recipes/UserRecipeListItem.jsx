@@ -50,7 +50,10 @@ export function UserRecipeListItem({ recipe, isRecipeSaved }) {
       setIsSaved((prev) => !prev);
     }
   };
-
+  const handleImageError = (event) => {
+    // If the image fails to load due to CORB, set a fallback image
+    event.target.src = "/assets/no-photo.png";
+  };
   return (
     <Card isPressable isHoverable variant="bordered" className="h-full">
       <CardHeader className="relative flex">
@@ -58,6 +61,7 @@ export function UserRecipeListItem({ recipe, isRecipeSaved }) {
           src={recipe.image}
           className="mx-4 mt-2 flex  w-full items-center justify-center rounded-xl object-cover"
           alt={recipe.name}
+          onError={handleImageError}
         />
         {recipe.totalTime > 0 && (
           <Chip className="absolute bottom-0 left-0 mb-6 ml-10 ">

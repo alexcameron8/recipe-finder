@@ -5,8 +5,26 @@ import {
   removeFromArrayDocument,
   findAllFeaturedRecipes,
 } from "../server/connect.js";
+import axios from "axios";
+import fs from "fs";
 
 const router = Router();
+
+async function downloadImage(url, destination) {
+  try {
+    const response = await axios({
+      url: url,
+      method: "GET",
+      responseType: "stream",
+    });
+
+    response.data.pipe(fs.createWriteStream(destination));
+
+    console.log(`Image downloaded successfully and saved to: ${destination}`);
+  } catch (error) {
+    console.error("Error downloading image:", error);
+  }
+}
 
 router.post("/save", async (req, res) => {
   const { recipe, user } = req.body;
@@ -49,6 +67,10 @@ router.post("/save", async (req, res) => {
     featured: true,
   };
   try {
+    const download = await downloadImage(
+      recipe_doc.image,
+      `C:/repos/recipe-list/public/assets/${recipe_doc.name}.jpg`,
+    );
     const result = await saveRecipe(recipe_doc);
 
     //TO-DO: Save recipe to users recipe list

@@ -51,6 +51,10 @@ export function FeaturedRecipeCard({ recipe, isRecipeSaved, isLoading }) {
       setIsSaved((prev) => !prev);
     }
   };
+  const handleImageError = (event) => {
+    // If the image fails to load due to CORB, set a fallback image
+    event.target.src = "/assets/no-photo.png";
+  };
 
   return (
     <Card isPressable isHoverable variant="bordered" className="h-full w-64">
@@ -59,6 +63,7 @@ export function FeaturedRecipeCard({ recipe, isRecipeSaved, isLoading }) {
           src={recipe.image}
           className="flex h-full items-center justify-center rounded-xl object-cover"
           alt={recipe.name}
+          onError={handleImageError}
         />
         <div className="flex flex-row items-center">
           <Chip color="default" className="absolute bottom-0 left-0 mb-6 ml-8 ">
