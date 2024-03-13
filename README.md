@@ -27,9 +27,11 @@ Instructions followed from my cluster at https://cloud.mongodb.com/
 NextUI:
 `npm i @nextui-org/react framer-motion`
 
-Carousel Library:
+Start Development Environment:
 
-`npm i react-multi-carousel`
+Start server: `node --require dotenv/config server.js`
+
+Start client: `npm run dev`
 
 ## Case Study
 

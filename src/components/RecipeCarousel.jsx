@@ -1,20 +1,14 @@
 import { Divider, Button, ButtonGroup } from "@nextui-org/react";
-import { FeaturedRecipeCard } from "./recipes/FeaturedRecipeCard";
+import {
+  FeaturedRecipeCard,
+  SkeletonRecipeCard,
+} from "./recipes/FeaturedRecipeCard";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-export function RecipeCarousel({ header, subheader, data }) {
+export function RecipeCarousel({ header, subheader, data, isLoading }) {
   let randomData;
-  // if (data) {
-  //   // Shuffle the featured recipe data
-  //   const shuffledData = [...data].sort(() => Math.random() - 0.5);
-  //   console.log(shuffledData);
-  //   // Slice the array to contain only 5 random indices
-  //   randomData = shuffledData.slice(0, 5);
-  // } else {
-  //   randomData = [];
-  // }
   randomData = data;
 
   const [startIndex, setStartIndex] = useState(0);
@@ -32,7 +26,7 @@ export function RecipeCarousel({ header, subheader, data }) {
   };
 
   return (
-    <>
+    <div className="w-1/4 max-w-screen-xl sm:w-5/12 md:w-3/5 lg:w-4/5 xl:w-full">
       <h2 className="text-2xl font-semibold">{header}</h2>
       <Divider className="my-2" />
       <h6 className="text-sm font-thin">{subheader}</h6>
@@ -51,6 +45,7 @@ export function RecipeCarousel({ header, subheader, data }) {
                 key={result.id}
                 recipe={randomData[currentIndex]}
                 isRecipeSaved={false}
+                isLoading={isLoading}
               />
             </motion.div>
           );
@@ -66,6 +61,6 @@ export function RecipeCarousel({ header, subheader, data }) {
           </Button>
         </ButtonGroup>
       </div>
-    </>
+    </div>
   );
 }

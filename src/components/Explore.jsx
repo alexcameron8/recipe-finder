@@ -1,5 +1,5 @@
 import { RecipeCarousel } from "./RecipeCarousel";
-import { Divider, Spinner } from "@nextui-org/react";
+import { Divider, Spinner, Skeleton } from "@nextui-org/react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -17,7 +17,6 @@ export function Explore() {
         );
         // Set userSavedRecipes state with the fetched data
         setFeaturedRecipes(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error(error);
       } finally {
@@ -62,39 +61,79 @@ export function Explore() {
     );
 
   return (
-    <div className="m-4 flex flex-col items-center">
-      {isLoading ? (
-        <div className="col-span-3 flex h-screen flex-col items-center justify-center">
-          <Spinner size="md" />
-        </div>
-      ) : (
-        <div className="max-w-screen-xl">
-          {/* <RecipeCarousel
+    // <div className="m-4 flex flex-col items-center">
+    //   {isLoading ? (
+    //     <div className="max-w-screen-xl">
+    //       {/* <div className="col-span-3 flex h-screen flex-col items-center justify-center">
+    //       <Spinner size="md" />
+    //      </div> */}
+    //     </div>
+    //   ) :
+    //   (
+    //     <div className="max-w-screen-xl">
+    //       {/* <RecipeCarousel
+    //         header="Featured Recipes"
+    //         subheader="Not sure what you are looking for? Check out some of these recipes!"
+    //       /> */}
+    //       <RecipeCarousel
+    //         header="Breakfast"
+    //         subheader="Popular recipes enjoyed by others!"
+    //         data={featuredBreakfast}
+    //         isLoading={isLoading}
+    //       />
+    //       <RecipeCarousel
+    //         header="Lunch & Dinner"
+    //         subheader="Popular lunch and dinner recipes enjoyed by others!"
+    //         data={featuredLunchDinner}
+    //         isLoading={isLoading}
+    //       />
+    //       <RecipeCarousel
+    //         header="Brunch"
+    //         subheader="Popular breakfast recipes enjoyed by others!"
+    //         data={featuredBrunch}
+    //         isLoading={isLoading}
+    //       />
+    //       <RecipeCarousel
+    //         header="Snacks"
+    //         subheader="Popular recipes enjoyed by others!"
+    //         data={featuredSnack}
+    //         isLoading={isLoading}
+    //       />
+    //     </div>
+    //   )}
+    // </div>
+
+    <div className="m-4 flex flex-col items-center ">
+      <div className="overflow-hidden">
+        {/* <RecipeCarousel
             header="Featured Recipes"
             subheader="Not sure what you are looking for? Check out some of these recipes!"
           /> */}
-          <RecipeCarousel
-            header="Breakfast"
-            subheader="Popular recipes enjoyed by others!"
-            data={featuredBreakfast}
-          />
-          <RecipeCarousel
-            header="Lunch & Dinner"
-            subheader="Popular lunch and dinner recipes enjoyed by others!"
-            data={featuredLunchDinner}
-          />
-          <RecipeCarousel
-            header="Brunch"
-            subheader="Popular breakfast recipes enjoyed by others!"
-            data={featuredBrunch}
-          />
-          <RecipeCarousel
-            header="Snacks"
-            subheader="Popular recipes enjoyed by others!"
-            data={featuredSnack}
-          />
-        </div>
-      )}
+        <RecipeCarousel
+          header="Breakfast"
+          subheader="Popular recipes enjoyed by others!"
+          data={featuredBreakfast}
+          isLoading={isLoading}
+        />
+        <RecipeCarousel
+          header="Lunch & Dinner"
+          subheader="Popular lunch and dinner recipes enjoyed by others!"
+          data={featuredLunchDinner}
+          isLoading={isLoading}
+        />
+        <RecipeCarousel
+          header="Brunch"
+          subheader="Popular breakfast recipes enjoyed by others!"
+          data={featuredBrunch}
+          isLoading={isLoading}
+        />
+        <RecipeCarousel
+          header="Snacks"
+          subheader="Popular recipes enjoyed by others!"
+          data={featuredSnack}
+          isLoading={isLoading}
+        />
+      </div>
     </div>
   );
 }
