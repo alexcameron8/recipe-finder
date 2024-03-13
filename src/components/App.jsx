@@ -10,7 +10,7 @@ import { UserRecipeList } from "./recipes/UserRecipeList";
 import { Profile } from "./users/Profile";
 import { NextUIProvider } from "@nextui-org/react";
 import { Explore } from "./Explore";
-import { Footer } from "./footer/Footer";
+import { Footer } from "./Footer/Footer";
 import { SearchPage } from "./Search/SearchPage";
 
 // Create a context
