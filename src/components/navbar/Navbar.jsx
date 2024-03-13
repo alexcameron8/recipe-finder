@@ -2,7 +2,13 @@ import { Link } from "react-router-dom";
 import { useCurrentUserResults } from "../App";
 import { ProfileDropdown } from "./ProfileDropdown";
 import { LuChefHat } from "react-icons/lu";
-import { IoHomeOutline, IoHomeSharp, IoHeartOutline } from "react-icons/io5";
+import {
+  IoHomeOutline,
+  IoHomeSharp,
+  IoHeartOutline,
+  IoSearchCircleOutline,
+  IoSearchCircle,
+} from "react-icons/io5";
 import { IoMdHeart } from "react-icons/io";
 import { MdOutlineExplore, MdExplore } from "react-icons/md";
 import { useState } from "react";
@@ -23,12 +29,9 @@ export function Nav() {
   const [curTab, setCurTab] = useState("home");
   const menuItems = [
     "Home",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "My Settings",
-    "Team Settings",
+    "Search",
+    "Explore",
+    "Profile Settings",
     "Help & Feedback",
     "Log Out",
   ];
@@ -78,6 +81,21 @@ export function Nav() {
               >
                 {curTab === "home" ? <IoHomeSharp /> : <IoHomeOutline />}
                 &nbsp;Home
+              </Link>
+            </NavbarItem>
+            <NavbarItem className="py-2" isActive={curTab === "search"}>
+              <Link
+                className="flex flex-row items-center font-semibold"
+                onClick={() => setCurTab("search")}
+                color="foreground"
+                to="/search"
+              >
+                {curTab === "search" ? (
+                  <IoSearchCircle />
+                ) : (
+                  <IoSearchCircleOutline />
+                )}
+                &nbsp;Search
               </Link>
             </NavbarItem>
             <NavbarItem className="py-2" isActive={curTab === "explore"}>

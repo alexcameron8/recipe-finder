@@ -10,7 +10,8 @@ import { UserRecipeList } from "./recipes/UserRecipeList";
 import { Profile } from "./users/Profile";
 import { NextUIProvider } from "@nextui-org/react";
 import { Explore } from "./Explore";
-import { Footer } from "./Footer/Footer";
+import { Footer } from "./footer/Footer";
+import { SearchPage } from "./Search/SearchPage";
 
 // Create a context
 const SearchResultsContext = createContext();
@@ -39,6 +40,7 @@ function App() {
             >
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/search" element={<SearchPage />} />
                 <Route path="/explore" element={<Explore />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
