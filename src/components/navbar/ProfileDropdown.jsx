@@ -26,7 +26,7 @@ export function ProfileDropdown() {
       <button
         id="dropdownInformationButton"
         data-dropdown-toggle="dropdownInformation"
-        className="inline-flex items-center rounded-full p-0.5 text-center text-3xl font-medium text-white focus:bg-blue-300 "
+        className="inline-flex items-center rounded-full p-0.5 text-center text-4xl font-medium text-white focus:bg-blue-300 "
         type="button"
         onClick={toggleDropdown} // Add onClick handler to toggle dropdown visibility
       >

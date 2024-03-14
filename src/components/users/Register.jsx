@@ -110,7 +110,10 @@ export function Register() {
   };
   return (
     <div className="flex h-min min-h-screen items-start justify-center">
-      <form className="mt-5 w-2/3" onSubmit={handleSubmit}>
+      <form
+        className="mt-5 w-2/3 rounded-2xl p-8 shadow-md"
+        onSubmit={handleSubmit}
+      >
         <fieldset className="flex flex-col gap-2">
           <h2 className="text-center text-2xl font-semibold">
             Register with <span className="font-bold">RecipeApp</span>
@@ -222,10 +225,10 @@ export function Register() {
             onChange={handleChange}
           />
           <Button
-            className="w-full"
+            className="mt-5 w-full font-semibold"
             type="submit"
             value="Register"
-            color="primary"
+            color="warning"
           >
             Register
           </Button>

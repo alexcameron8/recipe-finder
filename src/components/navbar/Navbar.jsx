@@ -55,7 +55,7 @@ export function Nav() {
               "data-[active=true]:after:right-0",
               "data-[active=true]:after:h-[2px]",
               "data-[active=true]:after:rounded-[2px]",
-              "data-[active=true]:after:bg-primary",
+              "data-[active=true]:after:bg-warning",
             ],
           }}
         >
@@ -65,8 +65,11 @@ export function Nav() {
           />
           <NavbarBrand>
             <h2 className=" self-center font-semibold text-white">
-              <Link className="flex flex-row items-center text-black" to="/">
-                <LuChefHat className="text-2xl" />
+              <Link
+                className="flex flex-row items-center text-2xl font-bold text-black"
+                to="/"
+              >
+                <LuChefHat className="text-3xl" />
                 &nbsp;RecipeApp
               </Link>
             </h2>
@@ -74,7 +77,7 @@ export function Nav() {
           <NavbarContent className=" hidden gap-10 sm:flex" justify="center">
             <NavbarItem className="py-2" isActive={curTab === "home"}>
               <Link
-                className="flex flex-row items-center font-semibold"
+                className="flex flex-row items-center text-xl font-semibold"
                 onClick={() => setCurTab("home")}
                 color="foreground"
                 to="/"
@@ -85,7 +88,7 @@ export function Nav() {
             </NavbarItem>
             <NavbarItem className="py-2" isActive={curTab === "search"}>
               <Link
-                className="flex flex-row items-center font-semibold"
+                className="flex flex-row items-center text-xl font-semibold"
                 onClick={() => setCurTab("search")}
                 color="foreground"
                 to="/search"
@@ -100,7 +103,7 @@ export function Nav() {
             </NavbarItem>
             <NavbarItem className="py-2" isActive={curTab === "explore"}>
               <Link
-                className="flex flex-row items-center font-semibold"
+                className="flex flex-row items-center text-xl font-semibold"
                 onClick={() => setCurTab("explore")}
                 to="/explore"
               >
@@ -111,7 +114,7 @@ export function Nav() {
             {currentUser && (
               <NavbarItem className="py-2" isActive={curTab === "my-recipes"}>
                 <Link
-                  className="flex flex-row items-center font-semibold"
+                  className="flex flex-row items-center text-xl font-semibold"
                   onClick={() => setCurTab("my-recipes")}
                   color="foreground"
                   to="/my-recipes"
@@ -131,11 +134,11 @@ export function Nav() {
               <ProfileDropdown />
             ) : (
               <>
-                <NavbarItem className="hidden sm:flex">
+                <NavbarItem className="hidden text-xl sm:flex">
                   <Link to="/login">Login</Link>
                 </NavbarItem>
-                <NavbarItem className="hidden sm:flex">
-                  <Button color="primary" variant="flat">
+                <NavbarItem className="hidden text-xl sm:flex">
+                  <Button color="primary" variant="flat" className="text-xl">
                     <Link to="/register">Sign Up</Link>
                   </Button>
                 </NavbarItem>

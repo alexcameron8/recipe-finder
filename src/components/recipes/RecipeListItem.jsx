@@ -115,6 +115,10 @@ export function RecipeListItem({ recipe, isRecipeSaved }) {
     const recipeId = recipe.uri.substring(startIndex + "#recipe_".length);
     navigate(`/recipe/${recipeId}`);
   }
+  const handleImageError = (event) => {
+    // If the image fails to load due to CORB, set a fallback image
+    event.target.src = "/assets/no-photo.png";
+  };
 
   const handleSaveClick = async () => {
     setIsSaving(true);
@@ -150,6 +154,7 @@ export function RecipeListItem({ recipe, isRecipeSaved }) {
           src={recipe.image}
           alt={recipe.label}
           onClick={() => handleShowRecipe(recipe)}
+          onError={handleImageError}
         />
         <div className="flex flex-grow flex-col py-4 pr-4">
           <div className="flex-grow" onClick={() => handleShowRecipe(recipe)}>
