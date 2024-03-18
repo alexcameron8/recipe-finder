@@ -21,7 +21,6 @@ export function RecipeList() {
             (savedRecipe) => savedRecipe === recipeId,
           );
         }
-
         return (
           <RecipeListItem
             key={result.recipe.uri}

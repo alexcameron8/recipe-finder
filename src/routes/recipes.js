@@ -7,6 +7,7 @@ import {
 } from "../server/connect.js";
 import axios from "axios";
 import fs from "fs";
+// import { Storage } from "@google-cloud/storage";
 
 const router = Router();
 
@@ -25,6 +26,48 @@ async function downloadImage(url, destination) {
     console.error("Error downloading image:", error);
   }
 }
+// const storage = new Storage({
+//   projectId: "your-project-id",
+//   keyFilename: "/path/to/your/keyfile.json", // Path to your GCP service account key file
+// });
+
+// async function uploadImageToGCS(imageData) {
+//   try {
+//     // Define the name of the file in the bucket (you can generate a unique name if needed)
+//     const fileName = "image.jpg";
+
+//     // Get a reference to the bucket
+//     const bucket = storage.bucket("recipe-finder-storage");
+
+//     // Create a write stream to upload the image data
+//     const file = bucket.file(fileName);
+//     const writeStream = file.createWriteStream({
+//       metadata: {
+//         contentType: "image/jpeg", // Set the content type of the file
+//       },
+//     });
+
+//     // Write the image data to the stream
+//     writeStream.end(imageData);
+
+//     // Wait for the upload to finish
+//     await new Promise((resolve, reject) => {
+//       writeStream.on("finish", resolve);
+//       writeStream.on("error", reject);
+//     });
+
+//     // Generate a signed URL for the uploaded file
+//     const [url] = await file.getSignedUrl({
+//       action: "read",
+//       expires: Date.now() + 1000 * 60 * 60 * 24, // URL valid for 24 hours
+//     });
+
+//     return url; // Return the public URL of the uploaded image
+//   } catch (error) {
+//     console.error("Error uploading image to Google Cloud Storage:", error);
+//     throw error;
+//   }
+// }
 
 router.post("/save", async (req, res) => {
   const { recipe, user } = req.body;

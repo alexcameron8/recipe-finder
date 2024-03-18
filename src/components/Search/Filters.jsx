@@ -1,4 +1,6 @@
 import { Dropdown } from "../Dropdown.jsx";
+import { Filter } from "./Filter.jsx";
+
 //Temporary until database is running
 const healthLabels = [
   {
@@ -221,33 +223,33 @@ const healthLabels = [
     definition: "No wheat, can have gluten though",
   },
 ];
-const mealTypes = ["breakfast", "brunch", "lunch/dinner", "snack", "teatime"];
+const mealTypes = ["Breakfast", "Brunch", "Lunch/Dinner", "Snack", "Teatime"];
 const dishTypes = [
-  "alcohol cocktail",
-  "biscuits and cookies",
-  "bread",
-  "cereals",
-  "condiments and sauces",
-  "desserts",
-  "drinks",
-  "egg",
-  "ice cream and custard",
-  "main course",
-  "pancake",
-  "pasta",
-  "pastry",
-  "pies and tarts",
+  "Alcohol Cocktail",
+  "Biscuits and Cookies",
+  "Bread",
+  "Cereals",
+  "Condiments and Sauces",
+  "Desserts",
+  "Drinks",
+  "Egg",
+  "Ice Cream and Custard",
+  "Main Course",
+  "Pancake",
+  "Pasta",
+  "Pastry",
+  "Pies and Tarts",
   "pizza",
-  "preps",
-  "preserve",
-  "salad",
-  "sandwiches",
-  "seafood",
-  "side dish",
-  "soup",
-  "special occasions",
-  "starter",
-  "sweets",
+  "Preps",
+  "Preserve",
+  "Salad",
+  "Sandwiches",
+  "Seafood",
+  "Side Dish",
+  "Soup",
+  "Special Occasions",
+  "Starter",
+  "Sweets",
 ];
 const cuisineTypes = [
   "american",
@@ -274,17 +276,34 @@ const cuisineTypes = [
 ];
 export function Filters({ isSelected, setIsSelected, resetFilters }) {
   return (
-    <div>
-      <div className="relative flex flex-row gap-3">
-        <Dropdown
-          dropdown_name="Dietary Restriction"
-          dropdown_data={healthLabels}
+    <div className="w-full">
+      <div className="relative flex flex-col gap-3">
+        <div>
+          <button
+            className="relative top-0 mx-1 text-yellow-600 underline"
+            onClick={resetFilters}
+          >
+            Reset All Filters
+          </button>
+        </div>
+        <Filter
+          filter_name="Dietary Restrictions"
+          filter_data={healthLabels.map((label) => label.webLabel)}
           isSelected={isSelected}
           setIsSelected={setIsSelected}
         />
-        <button className="relative top-0 underline" onClick={resetFilters}>
-          Reset Filters
-        </button>
+        <Filter
+          filter_name="Meal Types"
+          filter_data={mealTypes}
+          isSelected={isSelected}
+          setIsSelected={setIsSelected}
+        />
+        <Filter
+          filter_name="Dish Types"
+          filter_data={dishTypes}
+          isSelected={isSelected}
+          setIsSelected={setIsSelected}
+        />
       </div>
     </div>
   );
