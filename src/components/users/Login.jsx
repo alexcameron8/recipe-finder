@@ -62,6 +62,33 @@ export function Login() {
     };
   }, [formData]);
   const navigate = useNavigate();
+
+  const handleDemoLogin = async (e) => {
+    setIsLoading(true);
+    e.preventDefault();
+    try {
+      resetFormErrors();
+      const response = await axios.post("http://localhost:3000/users/login", {
+        email: "user@demo.com",
+        password: "Demo123!",
+      });
+
+      // Check status code for response
+      if (response.status === 200) {
+        setCurrentUser(response.data);
+        addAlert(
+          "success",
+          `Login success - Welcome back, ${response.data.firstName}.`,
+        );
+        setIsLoading(false);
+        navigate("/");
+      }
+    } catch (error) {
+      // Data error message
+      console.error("Data errors:", error.response.data);
+    }
+  };
+
   const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
@@ -207,6 +234,16 @@ export function Login() {
                   to="/register"
                 >
                   Create account
+                </Link>
+              </div>
+              <div className="flex w-full justify-end text-xs">
+                Just browsing? &nbsp;
+                <Link
+                  className="flex items-center text-xs underline hover:cursor-pointer hover:font-semibold"
+                  to="/"
+                  onClick={handleDemoLogin}
+                >
+                  Log in with a Demo Account
                 </Link>
               </div>
             </fieldset>

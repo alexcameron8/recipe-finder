@@ -18,7 +18,7 @@ async function downloadImage(url, destination) {
       method: "GET",
       responseType: "stream",
     });
-
+    console.log(response);
     response.data.pipe(fs.createWriteStream(destination));
 
     console.log(`Image downloaded successfully and saved to: ${destination}`);

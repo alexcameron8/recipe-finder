@@ -13,35 +13,160 @@ import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { Chip } from "@nextui-org/react";
 import { CircularProgress, Card } from "@nextui-org/react";
 
-const mealTypes = {
+const mealColorTypes = {
   breakfast: "warning",
   brunch: "primary",
   "lunch/dinner": "success",
   snack: "danger",
   teatime: "danger",
-  // breakfast: "bg-yellow-200",
-  // brunch: "bg-red-200",
-  // "lunch/dinner": "bg-green-200",
-  // snack: "bg-blue-200",
-  // teatime: "bg-fuchsia-200",
 };
-function getColor(mealType) {
+
+const cuisineTypes = [
+  "american",
+  "asian",
+  "british",
+  "caribbean",
+  "central europe",
+  "chinese",
+  "eastern europe",
+  "french",
+  "greek",
+  "indian",
+  "italian",
+  "japanese",
+  "korean",
+  "kosher",
+  "mediterranean",
+  "mexican",
+  "middle eastern",
+  "nordic",
+  "south american",
+  "south east asian",
+  "world",
+];
+const cuisineEmojis = {
+  american: "🇺🇸",
+  asian: "🍜",
+  british: "🇬🇧",
+  caribbean: "🌴",
+  "central europe": "🏰",
+  chinese: "🥢",
+  "eastern europe": "🇷🇺",
+  french: "🇫🇷",
+  greek: "🇬🇷",
+  indian: "🇮🇳",
+  italian: "🍝",
+  japanese: "🍣",
+  korean: "🇰🇷",
+  kosher: "🍏",
+  mediterranean: "🌊",
+  mexican: "🌮",
+  "middle eastern": "🕌",
+  nordic: "❄️",
+  "south american": "🌎",
+  "south east asian": "🍲",
+  world: "🌍",
+};
+
+const dishTypes = [
+  "Alcohol Cocktail",
+  "Biscuits and Cookies",
+  "Bread",
+  "Cereals",
+  "Condiments and Sauces",
+  "Desserts",
+  "Drinks",
+  "Egg",
+  "Ice Cream and Custard",
+  "Main Course",
+  "Pancake",
+  "Pasta",
+  "Pastry",
+  "Pies and Tarts",
+  "pizza",
+  "Preps",
+  "Preserve",
+  "Salad",
+  "Sandwiches",
+  "Seafood",
+  "Side Dish",
+  "Soup",
+  "Special Occasions",
+  "Starter",
+  "Sweets",
+];
+const cuisineTypeColors = {
+  american: "rgba(0, 0, 255, 0.5)", // Blue with 50% opacity
+  asian: "rgba(255, 0, 0, 0.5)", // Red with 50% opacity
+  british: "rgba(0, 128, 0, 0.5)", // Green with 50% opacity
+  caribbean: "rgba(255, 255, 0, 0.5)", // Yellow with 50% opacity
+  "central europe": "rgba(128, 0, 128, 0.5)", // Purple with 50% opacity
+  chinese: "rgba(255, 165, 0, 0.5)", // Orange with 50% opacity
+  "eastern europe": "rgba(0, 128, 128, 0.5)", // Teal with 50% opacity
+  french: "rgba(0, 255, 255, 0.5)", // Cyan with 50% opacity
+  greek: "rgba(75, 0, 130, 0.5)", // Indigo with 50% opacity
+  indian: "rgba(255, 192, 203, 0.5)", // Pink with 50% opacity
+  italian: "rgba(255, 215, 0, 0.5)", // Gold with 50% opacity
+  japanese: "rgba(0, 255, 0, 0.5)", // Lime with 50% opacity
+  korean: "rgba(128, 0, 128, 0.5)", // Deep purple with 50% opacity
+  kosher: "rgba(255, 140, 0, 0.5)", // Deep orange with 50% opacity
+  mediterranean: "rgba(173, 216, 230, 0.5)", // Light blue with 50% opacity
+  mexican: "rgba(144, 238, 144, 0.5)", // Light green with 50% opacity
+  "middle eastern": "rgba(105, 105, 105, 0.5)", // Blue-grey with 50% opacity
+  nordic: "rgba(255, 215, 0, 0.5)", // Gold with 50% opacity
+  "south american": "rgba(173, 216, 230, 0.5)", // Light blue with 50% opacity
+  "south east asian": "rgba(144, 238, 144, 0.5)", // Light green with 50% opacity
+  world: "rgba(255, 192, 203, 0.5)", // Pink with 50% opacity
+};
+
+const dishTypeColors = {
+  "alcohol cocktail": "rgba(0, 0, 255, 0.5)", // Blue with 50% opacity
+  "biscuits and cookies": "rgba(165, 42, 42, 0.5)", // Brown with 50% opacity
+  bread: "rgba(255, 255, 0, 0.5)", // Yellow with 50% opacity
+  cereals: "rgba(0, 128, 0, 0.5)", // Green with 50% opacity
+  "condiments and sauces": "rgba(255, 0, 0, 0.5)", // Red with 50% opacity
+  desserts: "rgba(128, 0, 128, 0.5)", // Purple with 50% opacity
+  drinks: "rgba(0, 255, 255, 0.5)", // Cyan with 50% opacity
+  egg: "rgba(255, 165, 0, 0.5)", // Orange with 50% opacity
+  "ice cream and custard": "rgba(255, 192, 203, 0.5)", // Pink with 50% opacity
+  "main course": "rgba(0, 128, 128, 0.5)", // Teal with 50% opacity
+  pancake: "rgba(75, 0, 130, 0.5)", // Indigo with 50% opacity
+  pasta: "rgba(0, 255, 0, 0.5)", // Lime with 50% opacity
+  pastry: "rgba(255, 215, 0, 0.5)", // Amber with 50% opacity
+  "pies and tarts": "rgba(128, 0, 128, 0.5)", // Deep purple with 50% opacity
+  pizza: "rgba(255, 140, 0, 0.5)", // Deep orange with 50% opacity
+  preps: "rgba(173, 216, 230, 0.5)", // Light blue with 50% opacity
+  preserve: "rgba(144, 238, 144, 0.5)", // Light green with 50% opacity
+  salad: "rgba(0, 255, 0, 0.5)", // Lime with 50% opacity
+  sandwiches: "rgba(255, 165, 0, 0.5)", // Orange with 50% opacity
+  seafood: "rgba(105, 105, 105, 0.5)", // Blue-grey with 50% opacity
+  "side dish": "rgba(144, 238, 144, 0.5)", // Light green with 50% opacity
+  soup: "rgba(173, 216, 230, 0.5)", // Light blue with 50% opacity
+  "special occasions": "rgba(255, 215, 0, 0.5)", // Gold with 50% opacity
+  starter: "rgba(173, 216, 230, 0.5)", // Light blue with 50% opacity
+  sweets: "rgba(255, 192, 203, 0.5)", // Pink with 50% opacity
+};
+
+function getMealColor(mealType) {
   let color;
   switch (mealType) {
     case "breakfast":
-      color = mealTypes.breakfast;
+      color = mealColorTypes.breakfast;
       break;
     case "brunch":
-      color = mealTypes.brunch;
+      color = mealColorTypes.brunch;
       break;
     case "lunch/dinner":
-      color = mealTypes["lunch/dinner"];
+      color = mealColorTypes["lunch/dinner"];
       break;
     case "snack":
-      color = mealTypes.snack;
+      color = mealColorTypes.snack;
       break;
     case "teatime":
-      color = mealTypes.teatime;
+      color = mealColorTypes.teatime;
+      break;
+    case "main course":
+      color = "yellow";
       break;
     default:
       color = "bg-white"; // Default color
@@ -49,7 +174,15 @@ function getColor(mealType) {
   }
   return color;
 }
+function getCuisineTypeColor(cuisineType) {
+  console.log(cuisineType);
+  console.log(cuisineTypeColors[cuisineType.toLowerCase()]);
+  return cuisineTypeColors[cuisineType.toLowerCase()] || "default";
+}
 
+function getDishTypeColor(dishType) {
+  return dishTypeColors[dishType] || "default";
+}
 function getMealName(mealType) {
   let mealName;
   switch (mealType) {
@@ -147,7 +280,6 @@ export function RecipeListItem({ recipe, isRecipeSaved }) {
 
   return (
     <div className="m-2 w-full max-w-screen-2xl items-center rounded-xl shadow-sm shadow-black/30 ">
-      {/* <div className={styles}> */}
       <Card isHoverable key={recipe.uri} className="flex flex-row">
         <img
           className="mr-2 size-1/3 rounded-3xl p-4"
@@ -161,20 +293,15 @@ export function RecipeListItem({ recipe, isRecipeSaved }) {
             <h3 className="pb-2 text-base font-bold sm:text-xl md:text-2xl">
               {recipe.label}
             </h3>
-            <Chip color={getColor(recipe.mealType[0])}>
-              {getMealName(recipe.mealType[0])}
-            </Chip>
-            <p>
-              {recipe.dishType}, {recipe.cuisineType}
+            <p className="font-semibold">
+              Calories: {recipe.calories.toFixed(0)}
             </p>
+            <p className="font-semibold">Servings: {recipe.yield}</p>
+            <div className="hidden py-2 font-light md:flex">
+              <p>{recipe.healthLabels.sort().join(" • ")}</p>
+            </div>
           </div>
-          <p className="font-semibold">
-            Calories: {recipe.calories.toFixed(0)}
-          </p>
-          <p className="font-semibold">Servings: {recipe.yield}</p>
-          <div className="py-2 font-light">
-            <p>{recipe.healthLabels.sort().join(" • ")}</p>
-          </div>
+
           {currentUser !== null && (
             <div className="flex justify-end">
               <button
@@ -195,6 +322,25 @@ export function RecipeListItem({ recipe, isRecipeSaved }) {
               </button>
             </div>
           )}
+          <div className="flex flex-wrap gap-1">
+            <Chip color={getMealColor(recipe.mealType[0])}>
+              {getMealName(recipe.mealType[0])}
+            </Chip>
+            <Chip
+              style={{ backgroundColor: getDishTypeColor(recipe.dishType[0]) }}
+            >
+              {recipe.dishType[0].charAt(0).toUpperCase() +
+                recipe.dishType[0].slice(1)}
+            </Chip>
+            <Chip
+              style={{
+                backgroundColor: getCuisineTypeColor(recipe.cuisineType[0]),
+              }}
+            >
+              {recipe.cuisineType[0].charAt(0).toUpperCase() +
+                recipe.cuisineType[0].slice(1)}
+            </Chip>
+          </div>
         </div>
       </Card>
     </div>

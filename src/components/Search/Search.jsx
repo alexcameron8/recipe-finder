@@ -7,7 +7,7 @@ import { Filters } from "./Filters";
 
 export function Search() {
   const [recipeQuery, setRecipeQuery] = useState("");
-  const [showFilters, setShowFilters] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
   const [isSelected, setIsSelected] = useState([]);
 
   const { setSearchResults } = useSearchResults();
@@ -46,7 +46,7 @@ export function Search() {
           type="text"
           id="search-bar"
           name="search-bar"
-          placeholder="Search recipes.."
+          placeholder="Search recipes..."
           onChange={(e) => setRecipeQuery(e.target.value)}
           required
         />
