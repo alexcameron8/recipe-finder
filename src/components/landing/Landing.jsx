@@ -7,13 +7,17 @@ import { MdPeople } from "react-icons/md";
 import { Cover } from "./Cover";
 import { Meals } from "./Meals";
 import { StepGuide } from "./StepGuide";
-
+import { Link } from "react-router-dom";
+import { useCurrentTabContext } from "../App";
+import { Demo } from "./Demo";
 export function Landing() {
+  const { curTab, setCurTab } = useCurrentTabContext();
+
   return (
     <div className="max-sm:mx-2">
       <div className="flex w-full max-w-screen-xl flex-row max-md:items-center max-md:justify-center">
         <div className="mt-10 flex basis-3/5 flex-col items-start justify-start max-sm:basis-full lg:mt-28">
-          <h1 className="text-3xl font-bold lg:text-5xl">
+          <h1 className="text-3xl font-bold tracking-tight lg:text-5xl">
             Discover <span className="text-yellow-400">Delicious Recipes</span>
             <br />
             Catered to Your Needs{" "}
@@ -26,7 +30,13 @@ export function Landing() {
               fullWidth="true"
               className="font-semibold"
             >
-              Learn More
+              <Link
+                onClick={() => setCurTab("search")}
+                color="foreground"
+                to="/search"
+              >
+                Get Started
+              </Link>
             </Button>
             <Button
               variant="shadow"
@@ -34,8 +44,14 @@ export function Landing() {
               fullWidth="true"
               className="font-semibold"
             >
-              <FaDisplay />
-              Watch a Demo
+              <a
+                href="#demo"
+                className="flex flex-row items-center"
+                onClick={() => setCurTab("home")}
+                style={{ color: "inherit", textDecoration: "inherit" }}
+              >
+                Watch a Demo
+              </a>
             </Button>
           </div>
           <div className="max-sm:space-evenly flex flex-row max-sm:mt-5 max-sm:gap-4 md:mb-10 md:mt-20 md:gap-10">
@@ -67,6 +83,7 @@ export function Landing() {
       <Meals />
       <Cover />
       <StepGuide />
+      <Demo />
     </div>
   );
 }

@@ -13,6 +13,15 @@ import {
   Skeleton,
 } from "@nextui-org/react";
 import { IoTimerOutline } from "react-icons/io5";
+import { RecipeInfoModal } from "./RecipeInfoModal";
+import { GiMeal } from "react-icons/gi";
+import { IoEarthOutline } from "react-icons/io5";
+import {
+  getMealColor,
+  getCuisineTypeColor,
+  getDishTypeColor,
+  getMealName,
+} from "./Recipe_helper";
 
 /* eslint-disable react/prop-types */
 export function FeaturedRecipeCard({ recipe, isRecipeSaved, isLoading }) {
@@ -98,9 +107,43 @@ export function FeaturedRecipeCard({ recipe, isRecipeSaved, isLoading }) {
       </CardBody>
       <CardFooter>
         <div className="flex flex-wrap gap-1">
-          <Chip>{recipe.mealType}</Chip>
-          <Chip>{recipe.dishType}</Chip>
-          <Chip>{recipe.cuisineType}</Chip>
+          {recipe.mealType && (
+            <Chip
+              className="font-medium max-md:text-xs"
+              style={{
+                backgroundColor: getMealColor(recipe.mealType[0]),
+              }}
+            >
+              {getMealName(recipe.mealType[0])}
+            </Chip>
+          )}
+          {recipe.dishType && (
+            <Chip
+              style={{
+                backgroundColor: getDishTypeColor(recipe.dishType[0]),
+              }}
+            >
+              <span className="flex flex-row items-center font-medium max-md:text-xs">
+                <GiMeal /> &nbsp;
+                {recipe.dishType[0].charAt(0).toUpperCase() +
+                  recipe.dishType[0].slice(1)}
+              </span>
+            </Chip>
+          )}
+          {recipe.cuisineType && (
+            <Chip
+              style={{
+                backgroundColor: getCuisineTypeColor(recipe.cuisineType[0]),
+              }}
+            >
+              <span className="flex flex-row items-center font-medium max-md:text-xs">
+                <IoEarthOutline />
+                &nbsp;
+                {recipe.cuisineType[0].charAt(0).toUpperCase() +
+                  recipe.cuisineType[0].slice(1)}
+              </span>
+            </Chip>
+          )}
         </div>
       </CardFooter>
     </Card>

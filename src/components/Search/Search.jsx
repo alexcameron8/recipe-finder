@@ -52,7 +52,7 @@ export function Search() {
         />
         <button
           type="button"
-          className="ms-2 w-max rounded-lg border border-yellow-600 bg-yellow-300 p-2.5 text-sm font-medium text-white hover:bg-yellow-700 focus:outline-none focus:ring-4 focus:ring-yellow-300 dark:bg-yellow-600"
+          className="ms-2 w-max rounded-lg border border-yellow-600 bg-yellow-300 p-2.5 text-sm font-medium text-white hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-300 dark:bg-yellow-600"
           onClick={() => setShowFilters((prev) => !prev)}
         >
           <IoFilter />

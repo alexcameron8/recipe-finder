@@ -5,7 +5,7 @@ export function SearchPage() {
   return (
     <div className="mt-10 flex flex-col justify-center">
       <div className="mb-4 flex flex-col items-center justify-center text-center">
-        <h2 className="text-3xl font-bold lg:text-4xl">
+        <h2 className="text-3xl font-bold tracking-tight lg:text-4xl">
           Find <span className="font-bold text-yellow-400">New</span> Recipes{" "}
           <span className="font-bold">
             Now

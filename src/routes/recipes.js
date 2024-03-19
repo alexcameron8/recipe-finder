@@ -7,67 +7,63 @@ import {
 } from "../server/connect.js";
 import axios from "axios";
 import fs from "fs";
-// import { Storage } from "@google-cloud/storage";
+import { Storage } from "@google-cloud/storage";
+import { dirname, join, basename } from "path";
+import { fileURLToPath, pathToFileURL } from "url";
 
 const router = Router();
+const envKeyFilePath = process.env.VITE_GC_STORAGE_KEY_PATH;
+const localServerUrl = process.env.VITE_LOCAL_SERVER_URL;
 
-async function downloadImage(url, destination) {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const keyFilePath = join(__dirname, "..", envKeyFilePath);
+
+const storage = new Storage({
+  keyFilename: keyFilePath,
+});
+
+// storage.getBuckets().then((x) => console.log(x)); //Testing
+
+const bucket = storage.bucket("recipe-finder-storage");
+
+async function downloadImage(url, destination, uploadUrl) {
   try {
     const response = await axios({
       url: url,
       method: "GET",
-      responseType: "stream",
+      responseType: "arraybuffer", // Set the responseType to arraybuffer
     });
-    console.log(response);
-    response.data.pipe(fs.createWriteStream(destination));
+
+    // Write the downloaded image to the destination file
+    fs.writeFileSync(destination, Buffer.from(response.data));
 
     console.log(`Image downloaded successfully and saved to: ${destination}`);
+    // Extract only the filename from the destination path
+    const filename = basename(destination);
+    //GCP Logic
+    const file = fs.createReadStream(destination);
+    const blob = bucket.file(filename);
+    const blobStream = blob.createWriteStream();
+
+    blobStream.on("error", (err) => {
+      console.error("Error uploading image:", err);
+    });
+
+    blobStream.on("finish", () => {
+      console.log(`Image uploaded successfully to: ${publicUrl}`);
+      // Delete the file after uploading
+      fs.unlinkSync(destination);
+      console.log(`Image file deleted: ${destination}`);
+    });
+
+    file.pipe(blobStream);
+    const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
+    return publicUrl;
   } catch (error) {
-    console.error("Error downloading image:", error);
+    console.error("Error downloading or uploading image:", error);
   }
 }
-// const storage = new Storage({
-//   projectId: "your-project-id",
-//   keyFilename: "/path/to/your/keyfile.json", // Path to your GCP service account key file
-// });
-
-// async function uploadImageToGCS(imageData) {
-//   try {
-//     // Define the name of the file in the bucket (you can generate a unique name if needed)
-//     const fileName = "image.jpg";
-
-//     // Get a reference to the bucket
-//     const bucket = storage.bucket("recipe-finder-storage");
-
-//     // Create a write stream to upload the image data
-//     const file = bucket.file(fileName);
-//     const writeStream = file.createWriteStream({
-//       metadata: {
-//         contentType: "image/jpeg", // Set the content type of the file
-//       },
-//     });
-
-//     // Write the image data to the stream
-//     writeStream.end(imageData);
-
-//     // Wait for the upload to finish
-//     await new Promise((resolve, reject) => {
-//       writeStream.on("finish", resolve);
-//       writeStream.on("error", reject);
-//     });
-
-//     // Generate a signed URL for the uploaded file
-//     const [url] = await file.getSignedUrl({
-//       action: "read",
-//       expires: Date.now() + 1000 * 60 * 60 * 24, // URL valid for 24 hours
-//     });
-
-//     return url; // Return the public URL of the uploaded image
-//   } catch (error) {
-//     console.error("Error uploading image to Google Cloud Storage:", error);
-//     throw error;
-//   }
-// }
 
 router.post("/save", async (req, res) => {
   const { recipe, user } = req.body;
@@ -113,8 +109,11 @@ router.post("/save", async (req, res) => {
     const download = await downloadImage(
       recipe_doc.image,
       `C:/repos/recipe-list/public/assets/${recipe_doc.name}.jpg`,
+      localServerUrl,
     );
-    const result = await saveRecipe(recipe_doc);
+
+    const updated_recipe_doc = { ...recipe_doc, image: download };
+    const result = await saveRecipe(updated_recipe_doc);
 
     //TO-DO: Save recipe to users recipe list
     const filter = { email: user.email };
@@ -156,8 +155,8 @@ router.put("/remove", async (req, res) => {
   try {
     const filter = { email: user.email };
     const updateDoc = { savedRecipes: recipeId };
-    console.log(filter);
-    console.log(updateDoc);
+    // console.log(filter);
+    // console.log(updateDoc);
     const update_user_saved_recipes = await removeFromArrayDocument(
       "RecipeApp",
       "Users",

@@ -13,6 +13,14 @@ import {
 } from "@nextui-org/react";
 import { IoTimerOutline } from "react-icons/io5";
 import { RecipeInfoModal } from "./RecipeInfoModal";
+import {
+  getMealColor,
+  getCuisineTypeColor,
+  getDishTypeColor,
+  getMealName,
+} from "./Recipe_helper";
+import { GiMeal } from "react-icons/gi";
+import { IoEarthOutline } from "react-icons/io5";
 
 /* eslint-disable react/prop-types */
 export function UserRecipeListItem({ recipe, isRecipeSaved }) {
@@ -69,31 +77,61 @@ export function UserRecipeListItem({ recipe, isRecipeSaved }) {
         className="h-full"
         onPress={handleOpen}
       >
-        <CardHeader className="relative flex">
-          <img
-            src={recipe.image}
-            className="mx-4 mt-2 flex  w-full items-center justify-center rounded-xl object-cover"
-            alt={recipe.name}
-            onError={handleImageError}
-          />
-          {recipe.totalTime > 0 && (
-            <Chip className="absolute bottom-0 left-0 mb-6 ml-10 ">
-              <div className="flex flex-row items-center font-semibold">
-                <IoTimerOutline /> &nbsp;{recipe.totalTime} mins
-              </div>
-            </Chip>
-          )}
+        <CardHeader className="flex">
+          <div className="relative w-full">
+            <img
+              src={recipe.image}
+              className="flex h-auto w-full rounded-3xl px-4 pt-2 max-md:px-1 max-md:pt-1"
+              alt={recipe.name}
+              onError={handleImageError}
+            />
+            {recipe.totalTime > 0 && (
+              <Chip className="absolute bottom-0 left-0 mb-6 ml-10 ">
+                <div className="flex flex-row items-center font-semibold">
+                  <IoTimerOutline /> &nbsp;{recipe.totalTime} mins
+                </div>
+              </Chip>
+            )}
+          </div>
         </CardHeader>
-        <CardBody>
-          <div className="mx-4 text-base font-bold sm:text-sm md:text-lg lg:text-xl ">
+        <CardBody className="max-md:p-1">
+          <div className="mx-4 text-base font-bold max-md:mx-0 max-md:text-center md:text-lg lg:text-xl">
             {recipe.name}
           </div>
         </CardBody>
-        <CardFooter>
-          <div className="mx-4 flex flex-row gap-1">
-            <Chip>{recipe.mealType}</Chip>
-            <Chip>{recipe.dishType}</Chip>
-            <Chip>{recipe.cuisineType}</Chip>
+        <CardFooter className="max-md:p-1">
+          <div className="mx-4 flex flex-wrap gap-1 ">
+            <Chip
+              className="font-medium max-md:text-xs"
+              style={{
+                backgroundColor: getMealColor(recipe.mealType[0]),
+              }}
+            >
+              {getMealName(recipe.mealType[0])}
+            </Chip>
+            <Chip
+              style={{
+                backgroundColor: getDishTypeColor(recipe.dishType[0]),
+              }}
+            >
+              <span className="flex flex-row items-center font-medium max-md:text-xs">
+                <GiMeal /> &nbsp;
+                {recipe.dishType[0].charAt(0).toUpperCase() +
+                  recipe.dishType[0].slice(1)}
+              </span>
+            </Chip>
+            <Chip
+              style={{
+                backgroundColor: getCuisineTypeColor(recipe.cuisineType[0]),
+              }}
+            >
+              <span className="flex flex-row items-center font-medium max-md:text-xs">
+                <IoEarthOutline />
+                &nbsp;
+                {recipe.cuisineType[0].charAt(0).toUpperCase() +
+                  recipe.cuisineType[0].slice(1)}
+              </span>
+            </Chip>
           </div>
         </CardFooter>
       </Card>

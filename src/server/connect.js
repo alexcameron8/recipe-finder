@@ -319,7 +319,7 @@ async function findAllSavedRecipes(userId) {
     };
 
     const recipe_list = await collection.findOne(filter, options);
-    console.log(recipe_list);
+
     const collection_recipes = database.collection("Recipes");
     const options_recipes = {
       // Include only the `title` and `imdb` fields in the returned document
