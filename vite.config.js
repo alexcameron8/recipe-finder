@@ -7,7 +7,7 @@ dotenv.config();
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  // base: "/recipe-finder/",
+  base: "/recipe-finder/",
   plugins: [react()],
   css: {
     postcss: {
