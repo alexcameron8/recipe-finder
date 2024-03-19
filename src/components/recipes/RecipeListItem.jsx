@@ -239,6 +239,12 @@ export function RecipeListItem({ recipe, isRecipeSaved }) {
   const [isSaving, setIsSaving] = useState(false);
   const navigate = useNavigate();
   const { currentUser } = useCurrentUserResults();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [tabIndex, setTabIndex] = useState(0);
+
+  const handleOpen = () => {
+    onOpen();
+  };
 
   function handleShowRecipe(recipe) {
     // Retrieve the ID from the recipe uri
@@ -280,7 +286,11 @@ export function RecipeListItem({ recipe, isRecipeSaved }) {
 
   return (
     <div className="m-2 w-full max-w-screen-2xl items-center rounded-xl shadow-sm shadow-black/30 ">
-      <Card isHoverable key={recipe.uri} className="flex flex-row">
+      <Card
+        isHoverable
+        key={recipe.uri}
+        className="flex flex-row hover:cursor-pointer"
+      >
         <img
           className="mr-2 size-1/3 rounded-3xl p-4"
           src={recipe.image}

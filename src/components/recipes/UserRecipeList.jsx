@@ -33,8 +33,10 @@ export function UserRecipeList() {
   return (
     <div className="mb-8 flex flex-col items-center justify-center">
       <div className="w-full max-w-screen-xl">
-        <h2 className="my-4 self-start text-2xl font-semibold">My Recipes</h2>
-        <Divider className="my-2  " />
+        <h2 className="my-4 self-start px-6 text-2xl font-semibold">
+          My Recipes
+        </h2>
+        <Divider className="mx-6 my-2  " />
       </div>
       <div className="grid max-w-screen-xl grid-cols-2 items-center gap-4  md:grid-cols-3">
         {isLoading ? ( // Render spinner if loading
