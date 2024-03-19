@@ -232,6 +232,15 @@ export function Register() {
           >
             Register
           </Button>
+          <div className="flex w-full justify-end text-xs">
+            Skip the Registration: &nbsp;
+            <Link
+              className="flex items-center text-xs underline hover:cursor-pointer hover:font-semibold"
+              to="/login"
+            >
+              Try a Demo Account
+            </Link>
+          </div>
         </fieldset>
       </form>
     </div>

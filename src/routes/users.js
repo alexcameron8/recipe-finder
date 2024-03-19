@@ -88,6 +88,24 @@ router.get("/", (req, res) => {
   res.send("User List");
 });
 
+router.get("/:userId", async (req, res) => {
+  const userId = req.params.userId;
+  try {
+    const result = await findAllSavedRecipes(userId);
+
+    if (result) {
+      //user successfully logged in
+      return res.status(200).send(result);
+    } else {
+      //user unsuccessfully logged in
+      return res.status(403).send(result);
+    }
+  } catch (error) {
+    console.error("Error retrieving recipe list:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 router.post("/register", sanitizeRegisterInput, async (req, res) => {
   try {
     console.log("Request body:", req.body);

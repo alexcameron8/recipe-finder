@@ -14,6 +14,7 @@ export function Search() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
+    setShowFilters(false);
     const recipes = await fetchRecipes(recipeQuery, isSelected);
     setSearchResults(recipes);
     localStorage.setItem("searchResults", JSON.stringify(recipes));
@@ -34,31 +35,31 @@ export function Search() {
 
   function resetFilters() {
     setIsSelected([]);
-    setShowFilters(false);
+    setShowFilters(true);
   }
 
   return (
-    <div className="mx-auto flex w-full max-w-screen-xl flex-col items-center justify-center">
+    <div className="mx-auto flex max-w-screen-xl flex-col items-center justify-center max-lg:mx-2 md:w-full">
       <form className="flex w-full items-center" onSubmit={handleSearch}>
         <input
-          className="mx-1 my-2 flex-1 rounded-md border-0 p-1 shadow-sm ring-1 ring-inset ring-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+          className="mx-1 my-2 flex-1 rounded-md border-0 p-1 shadow-sm ring-1 ring-inset ring-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-yellow-600"
           type="text"
           id="search-bar"
           name="search-bar"
-          placeholder="Search recipes.."
+          placeholder="Search recipes..."
           onChange={(e) => setRecipeQuery(e.target.value)}
           required
         />
         <button
           type="button"
-          className="ms-2 w-max rounded-lg border border-indigo-600 bg-indigo-600 p-2.5 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="ms-2 w-max rounded-lg border border-yellow-600 bg-yellow-300 p-2.5 text-sm font-medium text-white hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-300 dark:bg-yellow-600"
           onClick={() => setShowFilters((prev) => !prev)}
         >
           <IoFilter />
         </button>
         <button
           type="submit"
-          className="ms-2 w-max rounded-lg border border-indigo-600 bg-indigo-600 p-2.5 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="ms-2 w-max rounded-lg border border-yellow-600 bg-yellow-300 p-2.5 text-sm font-medium text-white hover:bg-yellow-700 focus:outline-none focus:ring-4 focus:ring-yellow-300 dark:bg-yellow-600 "
         >
           <svg
             className=" h-4"
@@ -77,28 +78,36 @@ export function Search() {
           </svg>
         </button>
       </form>
-      {/* {showFilters && (
-        <>
-          <ul className="mb-1 flex flex-wrap justify-center gap-1">
-            {isSelected?.map((filters) => (
-              <li
-                className="flex flex-row items-center rounded-lg border-2 border-solid border-black px-1 py-0.5 text-xs font-medium"
-                key={`tag-${filters}`}
-                onClick={() => handleLiClick(filters)}
-              >
-                <IoMdClose /> {filters}
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
       {showFilters && (
-        <Filters
-          isSelected={isSelected}
-          setIsSelected={setIsSelected}
-          resetFilters={resetFilters}
-        />
-      )} */}
+        <div className="border-slate w-full rounded-b-xl border-x-2 border-b-2 px-4 pb-4 shadow-xl">
+          <div className=" mt-2 flex flex-row items-start justify-start">
+            <h4 className="mx-1 font-semibold">
+              Active Filters:{" "}
+              {isSelected.length == 0 ? (
+                <span className="text-base">None</span>
+              ) : (
+                ""
+              )}
+            </h4>
+            <ul className="mb-1 flex flex-wrap justify-center gap-1">
+              {isSelected?.map((filters) => (
+                <li
+                  className="flex flex-row items-center rounded-lg border-2 border-solid border-black px-1 py-0.5 text-xs font-medium hover:cursor-pointer hover:brightness-110"
+                  key={`tag-${filters}`}
+                  onClick={() => handleLiClick(filters)}
+                >
+                  <IoMdClose /> {filters}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <Filters
+            isSelected={isSelected}
+            setIsSelected={setIsSelected}
+            resetFilters={resetFilters}
+          />
+        </div>
+      )}
     </div>
   );
 }

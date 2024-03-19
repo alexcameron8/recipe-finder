@@ -17,41 +17,46 @@ import { SearchPage } from "./Search/SearchPage";
 const SearchResultsContext = createContext();
 const CurrentUserContext = createContext(); //create this and apply to whole app?
 const AlertContext = createContext();
+const CurrentTabContext = createContext();
 
 // Custom hook to access the context
 export const useSearchResults = () => useContext(SearchResultsContext);
 export const useCurrentUserResults = () => useContext(CurrentUserContext);
 export const useAlertsContext = () => useContext(AlertContext);
+export const useCurrentTabContext = () => useContext(CurrentTabContext);
 
 function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [currentUser, setCurrentUser] = useState(null);
   const [alerts, setAlerts] = useState([]);
+  const [curTab, setCurTab] = useState("home");
 
   return (
     <NextUIProvider>
       <BrowserRouter>
-        <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
-          <AlertContext.Provider value={{ alerts, setAlerts }}>
-            <AlertList />
-            <Nav />
-            <SearchResultsContext.Provider
-              value={{ searchResults, setSearchResults }}
-            >
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/search" element={<SearchPage />} />
-                <Route path="/explore" element={<Explore />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/my-recipes" element={<UserRecipeList />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/recipe/:id" element={<RecipeInformation />} />
-              </Routes>
-              <Footer />
-            </SearchResultsContext.Provider>
-          </AlertContext.Provider>
-        </CurrentUserContext.Provider>
+        <CurrentTabContext.Provider value={{ curTab, setCurTab }}>
+          <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
+            <AlertContext.Provider value={{ alerts, setAlerts }}>
+              <AlertList />
+              <Nav />
+              <SearchResultsContext.Provider
+                value={{ searchResults, setSearchResults }}
+              >
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/search" element={<SearchPage />} />
+                  <Route path="/explore" element={<Explore />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/my-recipes" element={<UserRecipeList />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="/recipe/:id" element={<RecipeInformation />} />
+                </Routes>
+                <Footer />
+              </SearchResultsContext.Provider>
+            </AlertContext.Provider>
+          </CurrentUserContext.Provider>
+        </CurrentTabContext.Provider>
       </BrowserRouter>
     </NextUIProvider>
   );

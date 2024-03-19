@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useCurrentUserResults } from "../App";
+import { useCurrentUserResults, useCurrentTabContext } from "../App";
 import { ProfileDropdown } from "./ProfileDropdown";
 import { LuChefHat } from "react-icons/lu";
 import {
@@ -25,8 +25,9 @@ import {
 
 export function Nav() {
   const { currentUser, setCurrentUser } = useCurrentUserResults();
+  const { curTab, setCurTab } = useCurrentTabContext();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [curTab, setCurTab] = useState("home");
+  // const [curTab, setCurTab] = useState("home");
   const menuItems = [
     "Home",
     "Search",
@@ -38,7 +39,7 @@ export function Nav() {
 
   return (
     <>
-      <div className="align-center flex flex-row">
+      <div className="align-center flex flex-row ">
         <Navbar
           maxWidth="xl"
           onMenuOpenChange={setIsMenuOpen}
@@ -66,18 +67,21 @@ export function Nav() {
           <NavbarBrand>
             <h2 className=" self-center font-semibold text-white">
               <Link
-                className="flex flex-row items-center text-2xl font-bold text-black"
+                className="flex flex-row items-center text-2xl font-bold text-black max-md:text-xl"
                 to="/"
               >
-                <LuChefHat className="text-3xl" />
+                <LuChefHat className="text-3xl max-md:text-2xl" />
                 &nbsp;RecipeApp
               </Link>
             </h2>
           </NavbarBrand>
-          <NavbarContent className=" hidden gap-10 sm:flex" justify="center">
+          <NavbarContent
+            className=" hidden gap-10 max-md:gap-4  sm:flex"
+            justify="center"
+          >
             <NavbarItem className="py-2" isActive={curTab === "home"}>
               <Link
-                className="flex flex-row items-center text-xl font-semibold"
+                className="flex flex-row items-center text-xl font-semibold max-md:text-lg"
                 onClick={() => setCurTab("home")}
                 color="foreground"
                 to="/"
@@ -88,7 +92,7 @@ export function Nav() {
             </NavbarItem>
             <NavbarItem className="py-2" isActive={curTab === "search"}>
               <Link
-                className="flex flex-row items-center text-xl font-semibold"
+                className="flex flex-row items-center text-xl font-semibold max-md:text-lg"
                 onClick={() => setCurTab("search")}
                 color="foreground"
                 to="/search"
@@ -103,7 +107,7 @@ export function Nav() {
             </NavbarItem>
             <NavbarItem className="py-2" isActive={curTab === "explore"}>
               <Link
-                className="flex flex-row items-center text-xl font-semibold"
+                className="flex flex-row items-center text-xl font-semibold max-md:text-lg"
                 onClick={() => setCurTab("explore")}
                 to="/explore"
               >
@@ -114,7 +118,7 @@ export function Nav() {
             {currentUser && (
               <NavbarItem className="py-2" isActive={curTab === "my-recipes"}>
                 <Link
-                  className="flex flex-row items-center text-xl font-semibold"
+                  className="flex flex-row items-center text-xl font-semibold max-md:text-lg"
                   onClick={() => setCurTab("my-recipes")}
                   color="foreground"
                   to="/my-recipes"
@@ -134,11 +138,15 @@ export function Nav() {
               <ProfileDropdown />
             ) : (
               <>
-                <NavbarItem className="hidden text-xl sm:flex">
+                <NavbarItem className="hidden text-xl font-semibold max-md:text-lg sm:flex">
                   <Link to="/login">Login</Link>
                 </NavbarItem>
                 <NavbarItem className="hidden text-xl sm:flex">
-                  <Button color="primary" variant="flat" className="text-xl">
+                  <Button
+                    color="warning"
+                    variant="flat"
+                    className="text-xl font-semibold max-md:text-lg"
+                  >
                     <Link to="/register">Sign Up</Link>
                   </Button>
                 </NavbarItem>

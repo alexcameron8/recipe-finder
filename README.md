@@ -24,6 +24,8 @@ Instructions followed from my cluster at https://cloud.mongodb.com/
 
 `npm install react-router-dom`
 
+`npm install @google-cloud/storage`
+
 NextUI:
 `npm i @nextui-org/react framer-motion`
 

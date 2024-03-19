@@ -10,95 +10,16 @@ import {
   MdOutlineFreeBreakfast,
 } from "react-icons/md";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
-import { Chip } from "@nextui-org/react";
-import { CircularProgress, Card } from "@nextui-org/react";
-
-const mealTypes = {
-  breakfast: "warning",
-  brunch: "primary",
-  "lunch/dinner": "success",
-  snack: "danger",
-  teatime: "danger",
-  // breakfast: "bg-yellow-200",
-  // brunch: "bg-red-200",
-  // "lunch/dinner": "bg-green-200",
-  // snack: "bg-blue-200",
-  // teatime: "bg-fuchsia-200",
-};
-function getColor(mealType) {
-  let color;
-  switch (mealType) {
-    case "breakfast":
-      color = mealTypes.breakfast;
-      break;
-    case "brunch":
-      color = mealTypes.brunch;
-      break;
-    case "lunch/dinner":
-      color = mealTypes["lunch/dinner"];
-      break;
-    case "snack":
-      color = mealTypes.snack;
-      break;
-    case "teatime":
-      color = mealTypes.teatime;
-      break;
-    default:
-      color = "bg-white"; // Default color
-      break;
-  }
-  return color;
-}
-
-function getMealName(mealType) {
-  let mealName;
-  switch (mealType) {
-    case "breakfast":
-      mealName = (
-        <span className="flex flex-row items-center">
-          <MdOutlineFreeBreakfast />
-          &nbsp;Breakfast
-        </span>
-      );
-      break;
-    case "brunch":
-      mealName = (
-        <span className="flex flex-row items-center">
-          <MdOutlineBrunchDining />
-          &nbsp;Brunch
-        </span>
-      );
-      break;
-    case "lunch/dinner":
-      mealName = (
-        <span className="flex flex-row items-center">
-          <MdOutlineDinnerDining />
-          &nbsp;Lunch/Dinner
-        </span>
-      );
-      break;
-    case "snack":
-      mealName = (
-        <span className="flex flex-row items-center">
-          <MdOutlineCookie />
-          &nbsp;Snack
-        </span>
-      );
-      break;
-    case "teatime":
-      mealName = (
-        <span className="flex flex-row items-center">
-          <MdOutlineCookie />
-          &nbsp;Snack
-        </span>
-      );
-      break;
-    default:
-      mealName = ""; // Default color
-      break;
-  }
-  return mealName;
-}
+import { Chip, useDisclosure, CircularProgress, Card } from "@nextui-org/react";
+import { RecipeInfoModal } from "./RecipeInfoModal";
+import { GiMeal } from "react-icons/gi";
+import { IoEarthOutline } from "react-icons/io5";
+import {
+  getMealColor,
+  getCuisineTypeColor,
+  getDishTypeColor,
+  getMealName,
+} from "./Recipe_helper";
 
 /* eslint-disable react/prop-types */
 export function RecipeListItem({ recipe, isRecipeSaved }) {
@@ -106,6 +27,12 @@ export function RecipeListItem({ recipe, isRecipeSaved }) {
   const [isSaving, setIsSaving] = useState(false);
   const navigate = useNavigate();
   const { currentUser } = useCurrentUserResults();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [tabIndex, setTabIndex] = useState(0);
+
+  const handleOpen = () => {
+    onOpen();
+  };
 
   function handleShowRecipe(recipe) {
     // Retrieve the ID from the recipe uri
@@ -146,57 +73,106 @@ export function RecipeListItem({ recipe, isRecipeSaved }) {
   };
 
   return (
-    <div className="m-2 w-full max-w-screen-2xl items-center rounded-xl shadow-sm shadow-black/30 ">
-      {/* <div className={styles}> */}
-      <Card isHoverable key={recipe.uri} className="flex flex-row">
-        <img
-          className="mr-2 size-1/3 rounded-3xl p-4"
-          src={recipe.image}
-          alt={recipe.label}
-          onClick={() => handleShowRecipe(recipe)}
-          onError={handleImageError}
-        />
-        <div className="flex flex-grow flex-col py-4 pr-4">
-          <div className="flex-grow" onClick={() => handleShowRecipe(recipe)}>
-            <h3 className="pb-2 text-base font-bold sm:text-xl md:text-2xl">
-              {recipe.label}
-            </h3>
-            <Chip color={getColor(recipe.mealType[0])}>
-              {getMealName(recipe.mealType[0])}
-            </Chip>
-            <p>
-              {recipe.dishType}, {recipe.cuisineType}
-            </p>
-          </div>
-          <p className="font-semibold">
-            Calories: {recipe.calories.toFixed(0)}
-          </p>
-          <p className="font-semibold">Servings: {recipe.yield}</p>
-          <div className="py-2 font-light">
-            <p>{recipe.healthLabels.sort().join(" • ")}</p>
-          </div>
-          {currentUser !== null && (
-            <div className="flex justify-end">
-              <button
-                className="flex items-center text-3xl"
-                onClick={handleSaveClick}
-              >
-                {isSaving ? (
-                  <CircularProgress
-                    size="sm"
-                    color="danger"
-                    aria-label="Loading..."
-                  />
-                ) : isSaved ? (
-                  <IoMdHeart color="#f31260" />
-                ) : (
-                  <IoMdHeartEmpty />
-                )}
-              </button>
+    <>
+      <div className="m-2 w-full max-w-screen-2xl items-center rounded-xl shadow-sm shadow-black/30 ">
+        <Card
+          isHoverable
+          key={recipe.uri}
+          className="flex flex-row hover:cursor-pointer"
+        >
+          <img
+            className="mr-2 size-1/3 rounded-3xl p-4"
+            src={recipe.image}
+            alt={recipe.label}
+            // onClick={() => handleShowRecipe(recipe)}
+            onClick={handleOpen}
+            onError={handleImageError}
+          />
+          <div className="flex flex-grow flex-col py-4 pr-4">
+            {/* <div className="flex-grow" onClick={() => handleShowRecipe(recipe)}> */}
+            <div className="flex-grow" onClick={handleOpen}>
+              <h3 className="pb-2 text-base font-bold sm:text-xl md:text-2xl">
+                {recipe.label}
+              </h3>
+              <p className="font-semibold">
+                Calories: {recipe.calories.toFixed(0)}
+              </p>
+              <p className="font-semibold">Servings: {recipe.yield}</p>
+              <div className="hidden py-2 font-light max-lg:text-sm md:flex">
+                <p>{recipe.healthLabels.sort().join(" • ")}</p>
+              </div>
             </div>
-          )}
-        </div>
-      </Card>
-    </div>
+
+            <div className="flex flex-wrap gap-1">
+              {recipe.mealType && (
+                <Chip
+                  className="font-medium max-md:text-xs"
+                  style={{
+                    backgroundColor: getMealColor(recipe.mealType[0]),
+                  }}
+                >
+                  {getMealName(recipe.mealType[0])}
+                </Chip>
+              )}
+              {recipe.dishType && (
+                <Chip
+                  style={{
+                    backgroundColor: getDishTypeColor(recipe.dishType[0]),
+                  }}
+                >
+                  <span className="flex flex-row items-center font-medium max-md:text-xs">
+                    <GiMeal /> &nbsp;
+                    {recipe.dishType[0].charAt(0).toUpperCase() +
+                      recipe.dishType[0].slice(1)}
+                  </span>
+                </Chip>
+              )}
+              {recipe.cuisineType && (
+                <Chip
+                  style={{
+                    backgroundColor: getCuisineTypeColor(recipe.cuisineType[0]),
+                  }}
+                >
+                  <span className="flex flex-row items-center font-medium max-md:text-xs">
+                    <IoEarthOutline />
+                    &nbsp;
+                    {recipe.cuisineType[0].charAt(0).toUpperCase() +
+                      recipe.cuisineType[0].slice(1)}
+                  </span>
+                </Chip>
+              )}
+            </div>
+            {currentUser !== null && (
+              <div className="flex justify-end">
+                <button
+                  className="flex items-center text-3xl"
+                  onClick={handleSaveClick}
+                >
+                  {isSaving ? (
+                    <CircularProgress
+                      size="sm"
+                      color="danger"
+                      aria-label="Loading..."
+                    />
+                  ) : isSaved ? (
+                    <IoMdHeart color="#f31260" />
+                  ) : (
+                    <IoMdHeartEmpty />
+                  )}
+                </button>
+              </div>
+            )}
+          </div>
+        </Card>
+      </div>
+      <RecipeInfoModal
+        recipe={recipe}
+        isOpen={isOpen}
+        onClose={onClose}
+        isSaving={isSaving}
+        handleSaveClick={handleSaveClick}
+        isSaved={isSaved}
+      />
+    </>
   );
 }
