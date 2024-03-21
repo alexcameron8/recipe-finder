@@ -5,6 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Spinner, Input, Checkbox, Button, useInput } from "@nextui-org/react";
 import { MdOutlineEmail } from "react-icons/md";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import { LuChefHat } from "react-icons/lu";
 
 export function Register() {
   const default_errors = {
@@ -109,14 +110,18 @@ export function Register() {
     }
   };
   return (
-    <div className="flex h-min min-h-screen items-start justify-center">
+    <div className="flex h-min min-h-screen items-start justify-center bg-orange-50">
       <form
-        className="mt-5 w-2/3 rounded-2xl p-8 shadow-md"
+        className="mt-5 w-2/3 rounded-2xl bg-orange-100 p-8 shadow-md"
         onSubmit={handleSubmit}
       >
         <fieldset className="flex flex-col gap-2">
-          <h2 className="text-center text-2xl font-semibold">
-            Register with <span className="font-bold">RecipeApp</span>
+          <h2 className="flex flex-row items-center justify-center text-center text-2xl font-semibold">
+            Register with&nbsp;
+            <span className="flex flex-row font-bold">
+              <LuChefHat className="text-3xl max-md:text-2xl" />
+              &nbsp;MyRecipe<span className="text-yellow-400">Seeker</span>
+            </span>
           </h2>
           {formErrors.firstName && (
             <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">

@@ -71,7 +71,7 @@ export function Nav() {
                 to="/"
               >
                 <LuChefHat className="text-3xl max-md:text-2xl" />
-                &nbsp;RecipeApp
+                &nbsp;MyRecipe<span className="text-yellow-400">Seeker</span>
               </Link>
             </h2>
           </NavbarBrand>

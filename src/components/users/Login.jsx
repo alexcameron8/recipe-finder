@@ -6,6 +6,7 @@ import { MdOutlineEmail } from "react-icons/md";
 import { Spinner, Input, Button } from "@nextui-org/react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { LuChefHat } from "react-icons/lu";
 
 export function Login() {
   const default_errors = {
@@ -159,12 +160,16 @@ export function Login() {
       ) : (
         <div className="flex h-min min-h-screen items-start justify-center bg-orange-50">
           <form
-            className="mt-5 w-2/3 rounded-2xl p-8 shadow-md"
+            className="mt-5 w-2/3 rounded-2xl bg-orange-100 p-8 shadow-md"
             onSubmit={handleSubmit}
           >
             <fieldset className="flex flex-col gap-2">
-              <h2 className="mb-6 text-center text-2xl font-semibold">
-                Welcome to <span className="font-bold">RecipeApp</span>
+              <h2 className="mb-6 flex flex-row items-center justify-center text-center text-2xl font-semibold ">
+                Welcome to&nbsp;
+                <span className="flex flex-row font-bold">
+                  <LuChefHat className="text-3xl max-md:text-2xl" />
+                  &nbsp;MyRecipe<span className="text-yellow-400">Seeker</span>
+                </span>
               </h2>
               {formErrors.email && (
                 <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
