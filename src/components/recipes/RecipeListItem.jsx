@@ -78,7 +78,7 @@ export function RecipeListItem({ recipe, isRecipeSaved }) {
         <Card
           isHoverable
           key={recipe.uri}
-          className="flex flex-row hover:cursor-pointer"
+          className="flex flex-row hover:cursor-pointer "
         >
           <img
             className="mr-2 size-1/3 rounded-3xl p-4"

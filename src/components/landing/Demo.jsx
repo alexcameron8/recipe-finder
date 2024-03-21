@@ -11,7 +11,7 @@ export function Demo() {
     setIsHovering(false);
   };
   return (
-    <div className="flex flex-col items-center justify-center bg-orange-50 pb-7">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-orange-50 pb-7">
       <Divider className="" />
       <div
         id="demo"

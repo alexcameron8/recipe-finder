@@ -34,9 +34,9 @@ export function Profile() {
     });
   };
   return (
-    <div className="flex min-h-screen flex-col items-center">
-      <h2 className="mt-8 text-2xl font-semibold">Profile Settings</h2>
-      <div className="my-4 flex w-2/3 flex-col items-center gap-2">
+    <div className="flex min-h-screen flex-col items-center bg-orange-50 ">
+      <div className="my-4 flex w-2/3 flex-col items-center gap-2 rounded-lg bg-orange-100 p-4 shadow-lg">
+        <h2 className="my-4 text-2xl font-semibold">Profile Settings</h2>
         <Avatar
           isBordered
           color="default"

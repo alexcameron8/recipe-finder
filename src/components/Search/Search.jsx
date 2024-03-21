@@ -79,7 +79,7 @@ export function Search() {
         </button>
       </form>
       {showFilters && (
-        <div className="border-slate w-full rounded-b-xl border-x-2 border-b-2 px-4 pb-4 shadow-xl">
+        <div className="border-slate w-full rounded-b-xl border-x-2 border-b-2 px-4 pb-4 shadow-xl ">
           <div className=" mt-2 flex flex-row items-start justify-start">
             <h4 className="mx-1 font-semibold">
               Active Filters:{" "}

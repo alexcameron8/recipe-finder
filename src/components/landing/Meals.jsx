@@ -1,7 +1,6 @@
 import { Divider } from "@nextui-org/react";
 import { Link } from "react-router-dom";
 import { useCurrentTabContext } from "../App";
-import BackgroundSVG from "/assets/wave-haikei.svg"; // Import the SVG file
 
 const mealTypes = {
   Breakfast: "Breakfast",
@@ -14,16 +13,8 @@ const mealTypes = {
 export function Meals() {
   return (
     <>
-      <div
-        className="flex items-center justify-center py-14"
-        // style={{
-        //   backgroundImage: `url(${BackgroundSVG})`,
-        //   backgroundRepeat: "no-repeat",
-        //   backgroundPosition: "top",
-        //   backgroundSize: "cover",
-        // }}
-      >
-        <div className="mb-10 mt-20 flex w-full max-w-screen-xl flex-col lg:mt-32 ">
+      <div className="flex items-center justify-center py-14">
+        <div className="mb-10 flex w-full max-w-screen-xl flex-col lg:mt-32 ">
           <h2 className="mb-12 flex justify-center text-3xl font-bold">
             <span className="font-bold text-yellow-400">— &nbsp;</span>Recipe
             Categories

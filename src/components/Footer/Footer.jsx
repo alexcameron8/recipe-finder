@@ -2,8 +2,7 @@ import { Divider, Spinner, Skeleton } from "@nextui-org/react";
 
 export function Footer() {
   return (
-    <div className="mt-20 flex justify-center">
-      {/* <Divider /> */}
+    <div className="flex justify-center">
       <footer className="w-full justify-center bg-gray-100 py-4 text-sm">
         <p className=" flex items-center justify-center ">
           Designed & developed by Alex Cameron © 2024. Powered by{"\u00A0"}

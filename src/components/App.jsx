@@ -52,7 +52,7 @@ function App() {
                   <Route path="/profile" element={<Profile />} />
                   <Route path="/recipe/:id" element={<RecipeInformation />} />
                 </Routes>
-                <Footer />
+                {/* <Footer /> */}
               </SearchResultsContext.Provider>
             </AlertContext.Provider>
           </CurrentUserContext.Provider>

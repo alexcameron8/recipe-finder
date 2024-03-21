@@ -28,7 +28,7 @@ export function Filter({
     <div>
       <h2 className="mx-1 font-semibold">{filter_name}</h2>
       <ul
-        className="max-rows-10 border-slate grid grid-cols-2 gap-4 overflow-y-auto rounded-md border-2 p-3 text-sm text-gray-700 dark:text-gray-200 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5	"
+        className="max-rows-10 border-slate grid grid-cols-2 gap-4 overflow-y-auto rounded-md border-2 bg-white p-3 text-sm text-gray-700 dark:text-gray-200 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5	"
         aria-labelledby="dropdownBgHoverButton"
       >
         {filter_data?.map((filter_item, index) => (

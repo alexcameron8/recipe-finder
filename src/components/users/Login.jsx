@@ -153,11 +153,11 @@ export function Login() {
   return (
     <>
       {isLoading ? (
-        <div className=" flex h-screen min-h-screen flex-col items-center justify-center">
+        <div className=" flex h-screen min-h-screen flex-col items-center justify-center bg-orange-50">
           <Spinner size="md" />
         </div>
       ) : (
-        <div className="flex h-min min-h-screen items-start justify-center">
+        <div className="flex h-min min-h-screen items-start justify-center bg-orange-50">
           <form
             className="mt-5 w-2/3 rounded-2xl p-8 shadow-md"
             onSubmit={handleSubmit}

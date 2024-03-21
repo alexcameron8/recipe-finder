@@ -60,7 +60,7 @@ export function Explore() {
     );
 
   return (
-    <div className="m-4 flex flex-col items-center ">
+    <div className="flex flex-col items-center bg-orange-50 p-4">
       <div className="overflow-hidden">
         {/* <RecipeCarousel
             header="Featured Recipes"
