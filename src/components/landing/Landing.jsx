@@ -10,19 +10,34 @@ import { StepGuide } from "./StepGuide";
 import { Link } from "react-router-dom";
 import { useCurrentTabContext } from "../App";
 import { Demo } from "./Demo";
+import BackgroundSVG from "/assets/layered-waves-haikei.svg"; // Import the SVG file
+import { Parallax, ParallaxLayer } from "@react-spring/parallax";
+import { useRef } from "react";
+
 export function Landing() {
   const { curTab, setCurTab } = useCurrentTabContext();
+  const ref = useRef();
 
   return (
-    <div className="max-sm:mx-2">
-      <div className="flex w-full max-w-screen-xl flex-row max-md:items-center max-md:justify-center">
-        <div className="mt-10 flex basis-3/5 flex-col items-start justify-start max-sm:basis-full lg:mt-28">
+    <div className="w-full max-sm:mx-2">
+      <div
+        className="flex w-full flex-row max-md:items-center max-md:justify-center lg:pb-64 xl:pb-80"
+        // style={{
+        //   backgroundImage: `url(${BackgroundSVG})`,
+        //   backgroundRepeat: "no-repeat",
+        //   backgroundPosition: "bottom",
+        //   backgroundSize: "cover",
+        //   backgroundAttachment: "fixed",
+        //   backgroundBlendmode: "lighten",
+        // }}
+      >
+        <div className="relative z-10 mb-52 mt-10 flex w-full flex-col items-center justify-center lg:mt-28">
           <h1 className="text-3xl font-bold tracking-tight lg:text-5xl">
             Discover <span className="text-yellow-400">Delicious Recipes</span>
             <br />
             Catered to Your Needs{" "}
           </h1>
-          <div className="my-20 flex flex-row gap-4 max-sm:my-10">
+          <div className="my-8 flex flex-row gap-6 max-sm:my-10">
             <Button
               color="warning"
               variant="shadow"
@@ -54,7 +69,7 @@ export function Landing() {
               </a>
             </Button>
           </div>
-          <div className="max-sm:space-evenly flex flex-row max-sm:mt-5 max-sm:gap-4 md:mb-10 md:mt-20 md:gap-10">
+          <div className="mb-20 flex flex-row gap-20">
             <BannerItem
               icon={<ImBooks color="white" />}
               header="Over 2,000,000+"
@@ -71,13 +86,6 @@ export function Landing() {
               description="to share and get inspired by others"
             />
           </div>
-        </div>
-        <div className="flex w-full basis-2/5 items-center justify-center rounded-bl-full rounded-tl-full bg-yellow-400 pl-16  max-md:hidden">
-          <img
-            className="bottom-0 flex h-80 w-60 rounded-lg"
-            src="/assets/cooking-bw.jpg"
-            alt="landing-recipe"
-          />
         </div>
       </div>
       <Meals />
