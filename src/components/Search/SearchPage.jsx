@@ -3,7 +3,7 @@ import { RecipeList } from "../recipes/RecipeList";
 
 export function SearchPage() {
   return (
-    <div className="mt-10 flex flex-col justify-center">
+    <div className="flex flex-col justify-center bg-orange-50 pt-10">
       <div className="mb-4 flex flex-col items-center justify-center text-center">
         <h2 className="text-3xl font-bold tracking-tight lg:text-4xl">
           Find <span className="font-bold text-yellow-400">New</span> Recipes{" "}

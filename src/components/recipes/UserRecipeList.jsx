@@ -31,7 +31,7 @@ export function UserRecipeList() {
   }, [currentUser]);
 
   return (
-    <div className="mb-8 flex flex-col items-center justify-center">
+    <div className="mb-8 flex flex-col items-center justify-center bg-orange-50">
       <div className="w-full max-w-screen-xl">
         <h2 className="my-4 self-start px-6 text-2xl font-semibold">
           My Recipes
@@ -44,7 +44,7 @@ export function UserRecipeList() {
             <Spinner size="md" />
           </div>
         ) : userSavedRecipes.length === 0 ? (
-          <div className="flex h-screen flex-col items-center justify-center text-lg font-semibold">
+          <div className="flex h-screen flex-col items-center justify-center self-center text-lg font-semibold">
             No saved recipes.
           </div>
         ) : (

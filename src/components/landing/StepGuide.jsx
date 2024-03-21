@@ -6,9 +6,9 @@ import { Divider } from "@nextui-org/react";
 export function StepGuide() {
   return (
     // <div className="bg-gray-100">
-    <div>
-      <Divider className="my-14" />
-      <div className="mb-10 flex w-full max-w-screen-xl flex-col items-center justify-center ">
+    <div className="flex flex-col items-center justify-center bg-orange-50 pb-7">
+      <Divider className="" />
+      <div className="mb-10 flex w-full max-w-screen-xl flex-col items-center justify-center pt-7 ">
         <h2 className="mb-10 text-3xl font-bold">
           <span className="font-bold text-yellow-400">— &nbsp;</span>How it
           Works

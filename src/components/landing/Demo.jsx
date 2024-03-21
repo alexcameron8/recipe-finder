@@ -11,11 +11,11 @@ export function Demo() {
     setIsHovering(false);
   };
   return (
-    <div>
-      <Divider className="my-14" />
+    <div className="flex min-h-screen flex-col items-center justify-center bg-orange-50 pb-7">
+      <Divider className="" />
       <div
         id="demo"
-        className="flex max-w-screen-xl flex-col items-center justify-center"
+        className="flex max-w-screen-xl flex-col items-center justify-center pt-7"
       >
         <h2 className="mb-12 flex justify-center text-3xl font-bold">
           <span className="font-bold text-yellow-400">— &nbsp;</span>Demo Video

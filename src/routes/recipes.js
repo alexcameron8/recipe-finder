@@ -17,7 +17,12 @@ const localServerUrl = process.env.VITE_LOCAL_SERVER_URL;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const keyFilePath = join(__dirname, "..", envKeyFilePath);
+
+//Production env:
+const keyFilePath = `/etc/secrets/${envKeyFilePath}`;
+
+// Development env:
+// const keyFilePath = join(__dirname, "..", envKeyFilePath);
 
 const storage = new Storage({
   keyFilename: keyFilePath,

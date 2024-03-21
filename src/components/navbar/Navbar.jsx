@@ -39,7 +39,7 @@ export function Nav() {
 
   return (
     <>
-      <div className="align-center flex flex-row ">
+      <div className="align-center flex flex-row bg-orange-100">
         <Navbar
           maxWidth="xl"
           onMenuOpenChange={setIsMenuOpen}

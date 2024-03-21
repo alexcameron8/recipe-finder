@@ -12,42 +12,43 @@ const mealTypes = {
 
 export function Meals() {
   return (
-    <div>
-      <Divider className="my-14" />
-      <div className="mb-10 flex w-full max-w-screen-xl flex-col  ">
-        <h2 className="mb-12 flex justify-center text-3xl font-bold">
-          <span className="font-bold text-yellow-400">— &nbsp;</span>Recipe
-          Categories
-        </h2>
-        <div className="flex flex-row justify-evenly">
-          <Meal
-            mealType={mealTypes.Breakfast}
-            img="/assets/icons/breakfast-icon.jpg"
-            meal="breakfast"
-          />
-          <Meal
-            mealType={mealTypes.Brunch}
-            img="/assets/icons/brunch-icon.jpg"
-            meal="brunch"
-          />
-          <Meal
-            mealType={mealTypes["Lunch/Dinner"]}
-            img="/assets/icons/lunch-dinner-icon.jpg"
-            meal="lunch-dinner"
-          />
-          <Meal
-            mealType={mealTypes.Snack}
-            img="/assets/icons/snacks-icon.jpg"
-            meal="snack"
-          />
-          <Meal
-            mealType={mealTypes.Teatime}
-            img="/assets/icons/tea-time-icon.jpg"
-            meal="teatime"
-          />
+    <>
+      <div className="flex items-center justify-center py-14">
+        <div className="mb-10 flex w-full max-w-screen-xl flex-col lg:mt-32 ">
+          <h2 className="mb-12 flex justify-center text-3xl font-bold">
+            <span className="font-bold text-yellow-400">— &nbsp;</span>Recipe
+            Categories
+          </h2>
+          <div className="flex flex-row justify-evenly">
+            <Meal
+              mealType={mealTypes.Breakfast}
+              img="/assets/icons/breakfast-icon.jpg"
+              meal="breakfast"
+            />
+            <Meal
+              mealType={mealTypes.Brunch}
+              img="/assets/icons/brunch-icon.jpg"
+              meal="brunch"
+            />
+            <Meal
+              mealType={mealTypes["Lunch/Dinner"]}
+              img="/assets/icons/lunch-dinner-icon.jpg"
+              meal="lunch-dinner"
+            />
+            <Meal
+              mealType={mealTypes.Snack}
+              img="/assets/icons/snacks-icon.jpg"
+              meal="snack"
+            />
+            <Meal
+              mealType={mealTypes.Teatime}
+              img="/assets/icons/tea-time-icon.jpg"
+              meal="teatime"
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
