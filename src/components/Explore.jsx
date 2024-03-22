@@ -1,6 +1,7 @@
 import { RecipeCarousel } from "./RecipeCarousel";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Nav } from "./navbar/Navbar";
 
 export function Explore() {
   const [featuredRecipes, setFeaturedRecipes] = useState([]);
@@ -69,41 +70,44 @@ export function Explore() {
     );
 
   return (
-    <div className="flex flex-col items-center bg-orange-50 p-4">
-      <div className="max-w-screen-xl bg-orange-50">
-        {/* <RecipeCarousel
+    <>
+      <Nav />
+      <div className="flex flex-col items-center bg-orange-50 p-4">
+        <div className="mx-4 max-w-screen-xl bg-orange-50 ">
+          {/* <RecipeCarousel
             header="Featured Recipes"
             subheader="Not sure what you are looking for? Check out some of these recipes!"
           /> */}
-        <RecipeCarousel
-          id="breakfast"
-          header="Breakfast"
-          subheader="Popular recipes enjoyed by others!"
-          data={featuredBreakfast}
-          isLoading={isLoading}
-        />
-        <RecipeCarousel
-          id="lunch-dinner"
-          header="Lunch & Dinner"
-          subheader="Popular lunch and dinner recipes enjoyed by others!"
-          data={featuredLunchDinner}
-          isLoading={isLoading}
-        />
-        <RecipeCarousel
-          id="brunch"
-          header="Brunch"
-          subheader="Popular breakfast recipes enjoyed by others!"
-          data={featuredBrunch}
-          isLoading={isLoading}
-        />
-        <RecipeCarousel
-          id="snacks"
-          header="Snacks"
-          subheader="Popular recipes enjoyed by others!"
-          data={featuredSnack}
-          isLoading={isLoading}
-        />
+          <RecipeCarousel
+            id="breakfast"
+            header="Breakfast"
+            subheader="Popular recipes enjoyed by others!"
+            data={featuredBreakfast}
+            isLoading={isLoading}
+          />
+          <RecipeCarousel
+            id="lunch-dinner"
+            header="Lunch & Dinner"
+            subheader="Popular lunch and dinner recipes enjoyed by others!"
+            data={featuredLunchDinner}
+            isLoading={isLoading}
+          />
+          <RecipeCarousel
+            id="brunch"
+            header="Brunch"
+            subheader="Popular breakfast recipes enjoyed by others!"
+            data={featuredBrunch}
+            isLoading={isLoading}
+          />
+          <RecipeCarousel
+            id="snacks"
+            header="Snacks"
+            subheader="Popular recipes enjoyed by others!"
+            data={featuredSnack}
+            isLoading={isLoading}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }

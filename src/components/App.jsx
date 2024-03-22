@@ -38,7 +38,7 @@ function App() {
           <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
             <AlertContext.Provider value={{ alerts, setAlerts }}>
               <AlertList />
-              <Nav />
+              {/* <Nav /> */}
               <SearchResultsContext.Provider
                 value={{ searchResults, setSearchResults }}
               >

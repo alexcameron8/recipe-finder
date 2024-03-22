@@ -6,6 +6,7 @@ import { Spinner, Input, Checkbox, Button, useInput } from "@nextui-org/react";
 import { MdOutlineEmail } from "react-icons/md";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { LuChefHat } from "react-icons/lu";
+import { Nav } from "../navbar/Navbar";
 
 export function Register() {
   const default_errors = {
@@ -118,144 +119,147 @@ export function Register() {
     }
   };
   return (
-    <div className="flex h-min min-h-screen items-start justify-center bg-orange-50">
-      <form
-        className="mt-5 w-2/3 rounded-2xl bg-orange-100 p-8 shadow-md"
-        onSubmit={handleSubmit}
-      >
-        <fieldset className="flex flex-col gap-2">
-          <h2 className="flex flex-row items-center justify-center text-center text-2xl font-semibold">
-            Register with&nbsp;
-            <span className="flex flex-row font-bold">
-              <LuChefHat className="text-3xl max-md:text-2xl" />
-              &nbsp;MyRecipe<span className="text-yellow-400">Seeker</span>
-            </span>
-          </h2>
-          {formErrors.firstName && (
-            <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
-              * Contains invalid characters.
-            </span>
-          )}
-          <Input
-            name="firstName"
-            id="firstName"
-            // status={helper.color}
-            // color={helper.color}
-            // helperColor={helper.color}
-            // errorMessage={helper.color === "error" && helper.text}
-            variant="faded"
-            type="text"
-            label="First Name"
-            labelPlacement="outside"
-            placeholder="Enter First Name..."
-            endContent={<MdOutlineEmail />}
-            isRequired
-            onChange={handleChange}
-          />
-          {formErrors.lastName && (
-            <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
-              * Contains invalid characters.
-            </span>
-          )}
-          <Input
-            name="lastName"
-            id="lastName"
-            // status={helper.color}
-            // color={helper.color}
-            // helperColor={helper.color}
-            // errorMessage={helper.color === "error" && helper.text}
-            variant="faded"
-            type="text"
-            label="Last Name"
-            labelPlacement="outside"
-            placeholder="Enter Last Name..."
-            endContent={<MdOutlineEmail />}
-            isRequired
-            onChange={handleChange}
-          />
-          {formErrors.email && (
-            <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
-              * Invalid email format.
-            </span>
-          )}
-          <Input
-            name="email"
-            id="email"
-            status={helper.color}
-            color={helper.color}
-            helperColor={helper.color}
-            errorMessage={helper.color === "error" && helper.text}
-            variant="faded"
-            type="email"
-            label="Email"
-            labelPlacement="outside"
-            placeholder="Email address"
-            endContent={<MdOutlineEmail />}
-            isRequired
-            onChange={handleChange}
-          />
+    <>
+      <Nav />
+      <div className="flex h-min min-h-screen items-start justify-center bg-orange-50">
+        <form
+          className="mt-5 w-2/3 rounded-2xl bg-orange-100 p-8 shadow-md"
+          onSubmit={handleSubmit}
+        >
+          <fieldset className="flex flex-col gap-2">
+            <h2 className="flex flex-row items-center justify-center text-center text-2xl font-semibold">
+              Register with&nbsp;
+              <span className="flex flex-row font-bold">
+                <LuChefHat className="text-3xl max-md:text-2xl" />
+                &nbsp;MyRecipe<span className="text-yellow-400">Seeker</span>
+              </span>
+            </h2>
+            {formErrors.firstName && (
+              <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
+                * Contains invalid characters.
+              </span>
+            )}
+            <Input
+              name="firstName"
+              id="firstName"
+              // status={helper.color}
+              // color={helper.color}
+              // helperColor={helper.color}
+              // errorMessage={helper.color === "error" && helper.text}
+              variant="faded"
+              type="text"
+              label="First Name"
+              labelPlacement="outside"
+              placeholder="Enter First Name..."
+              endContent={<MdOutlineEmail />}
+              isRequired
+              onChange={handleChange}
+            />
+            {formErrors.lastName && (
+              <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
+                * Contains invalid characters.
+              </span>
+            )}
+            <Input
+              name="lastName"
+              id="lastName"
+              // status={helper.color}
+              // color={helper.color}
+              // helperColor={helper.color}
+              // errorMessage={helper.color === "error" && helper.text}
+              variant="faded"
+              type="text"
+              label="Last Name"
+              labelPlacement="outside"
+              placeholder="Enter Last Name..."
+              endContent={<MdOutlineEmail />}
+              isRequired
+              onChange={handleChange}
+            />
+            {formErrors.email && (
+              <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
+                * Invalid email format.
+              </span>
+            )}
+            <Input
+              name="email"
+              id="email"
+              status={helper.color}
+              color={helper.color}
+              helperColor={helper.color}
+              errorMessage={helper.color === "error" && helper.text}
+              variant="faded"
+              type="email"
+              label="Email"
+              labelPlacement="outside"
+              placeholder="Email address"
+              endContent={<MdOutlineEmail />}
+              isRequired
+              onChange={handleChange}
+            />
 
-          {formErrors.password && (
-            <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
-              * Password must be at least 6 characters and contain at least one
-              number, one character, and one symbol
-            </span>
-          )}
-          <Input
-            name="password"
-            id="password"
-            variant="faded"
-            type={isVisible ? "text" : "password"}
-            label="Password"
-            labelPlacement="outside"
-            placeholder="Must have at least 6 characters"
-            endContent={
-              <button
-                className="focus:outline-none"
-                type="button"
-                onClick={toggleVisibility}
-              >
-                {isVisible ? <IoMdEye /> : <IoMdEyeOff />}
-              </button>
-            }
-            isRequired
-            onChange={handleChange}
-          />
-          {formErrors.confirmPassword && (
-            <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
-              * Passwords do not match
-            </span>
-          )}
-          <Input
-            name="confirmPassword"
-            id="confirmPassword"
-            variant="faded"
-            type={isVisible ? "text" : "password"}
-            label="Confirm Password"
-            labelPlacement="outside"
-            placeholder="Passwords must match"
-            isRequired
-            onChange={handleChange}
-          />
-          <Button
-            className="mt-5 w-full font-semibold"
-            type="submit"
-            value="Register"
-            color="warning"
-          >
-            Register
-          </Button>
-          <div className="flex w-full justify-end text-xs">
-            Skip the Registration: &nbsp;
-            <Link
-              className="flex items-center text-xs underline hover:cursor-pointer hover:font-semibold"
-              to="/login"
+            {formErrors.password && (
+              <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
+                * Password must be at least 6 characters and contain at least
+                one number, one character, and one symbol
+              </span>
+            )}
+            <Input
+              name="password"
+              id="password"
+              variant="faded"
+              type={isVisible ? "text" : "password"}
+              label="Password"
+              labelPlacement="outside"
+              placeholder="Must have at least 6 characters"
+              endContent={
+                <button
+                  className="focus:outline-none"
+                  type="button"
+                  onClick={toggleVisibility}
+                >
+                  {isVisible ? <IoMdEye /> : <IoMdEyeOff />}
+                </button>
+              }
+              isRequired
+              onChange={handleChange}
+            />
+            {formErrors.confirmPassword && (
+              <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">
+                * Passwords do not match
+              </span>
+            )}
+            <Input
+              name="confirmPassword"
+              id="confirmPassword"
+              variant="faded"
+              type={isVisible ? "text" : "password"}
+              label="Confirm Password"
+              labelPlacement="outside"
+              placeholder="Passwords must match"
+              isRequired
+              onChange={handleChange}
+            />
+            <Button
+              className="mt-5 w-full font-semibold"
+              type="submit"
+              value="Register"
+              color="warning"
             >
-              Try a Demo Account
-            </Link>
-          </div>
-        </fieldset>
-      </form>
-    </div>
+              Register
+            </Button>
+            <div className="flex w-full justify-end text-xs">
+              Skip the Registration: &nbsp;
+              <Link
+                className="flex items-center text-xs underline hover:cursor-pointer hover:font-semibold"
+                to="/login"
+              >
+                Try a Demo Account
+              </Link>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </>
   );
 }

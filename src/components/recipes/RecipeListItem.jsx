@@ -3,12 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useCurrentUserResults } from "../App";
-import {
-  MdOutlineCookie,
-  MdOutlineDinnerDining,
-  MdOutlineBrunchDining,
-  MdOutlineFreeBreakfast,
-} from "react-icons/md";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { Chip, useDisclosure, CircularProgress, Card } from "@nextui-org/react";
 import { RecipeInfoModal } from "./RecipeInfoModal";

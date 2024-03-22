@@ -108,7 +108,7 @@ router.post("/save", async (req, res) => {
     mealType: mealType,
     cuisineType: cuisineType,
     dietLabels: dietLabels,
-    featured: true,
+    featured: false,
   };
   try {
     const download = await downloadImage(

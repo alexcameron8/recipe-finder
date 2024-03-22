@@ -7,6 +7,7 @@ import { Spinner, Input, Button } from "@nextui-org/react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Link } from "react-router-dom";
 import { LuChefHat } from "react-icons/lu";
+import { Nav } from "../navbar/Navbar";
 
 export function Login() {
   const default_errors = {
@@ -172,6 +173,7 @@ export function Login() {
   };
   return (
     <>
+      <Nav />
       {isLoading ? (
         <div className=" flex h-screen min-h-screen flex-col items-center justify-center bg-orange-50">
           <Spinner size="md" />
