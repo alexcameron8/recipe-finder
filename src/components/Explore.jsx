@@ -11,9 +11,18 @@ export function Explore() {
     const fetchFeaturedRecipes = async () => {
       // Perform database query to fetch featured recipes
       try {
-        const response = await axios.get(
-          `http://localhost:3000/recipes/featured`,
-        );
+        let endpoint;
+        if (
+          window.location.hostname === "localhost" ||
+          window.location.hostname === "127.0.0.1"
+        ) {
+          // Code for development environment
+          endpoint = `http://localhost:3000/recipes/featured`;
+        } else {
+          // Code for production environment
+          endpoint = `https://recipe-finder-backend-6wdh.onrender.com/recipes/featured`;
+        }
+        const response = await axios.get(endpoint);
         // Set userSavedRecipes state with the fetched data
         setFeaturedRecipes(response.data);
       } catch (error) {

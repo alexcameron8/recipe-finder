@@ -13,7 +13,7 @@ import { fileURLToPath, pathToFileURL } from "url";
 
 const router = Router();
 const envKeyFilePath = process.env.VITE_GC_STORAGE_KEY_PATH;
-const localServerUrl = process.env.VITE_LOCAL_SERVER_URL;
+const localServerUrl = process.env.VITE_SERVER_URL;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

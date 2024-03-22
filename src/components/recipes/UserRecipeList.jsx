@@ -15,9 +15,18 @@ export function UserRecipeList() {
       const fetchUserSavedRecipes = async () => {
         // Perform database query to fetch user's saved recipes
         try {
-          const response = await axios.get(
-            `http://localhost:3000/users/${currentUser?.userId}/savedRecipes`,
-          );
+          let endpoint;
+          if (
+            window.location.hostname === "localhost" ||
+            window.location.hostname === "127.0.0.1"
+          ) {
+            // Code for development environment
+            endpoint = `http://localhost:3000/users/${currentUser?.userId}/savedRecipes`;
+          } else {
+            // Code for production environment
+            endpoint = `https://recipe-finder-backend-6wdh.onrender.com/users/${currentUser?.userId}/savedRecipes`;
+          }
+          const response = await axios.get(endpoint);
           // Set userSavedRecipes state with the fetched data
           setUserSavedRecipes(response.data);
         } catch (error) {

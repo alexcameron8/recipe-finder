@@ -65,10 +65,18 @@ export function Register() {
     e.preventDefault();
     try {
       resetFormErrors();
-      const response = await axios.post(
-        "http://localhost:3000/users/register",
-        formData,
-      );
+      let endpoint;
+      if (
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
+      ) {
+        // Code for development environment
+        endpoint = `http://localhost:3000/users/register`;
+      } else {
+        // Code for production environment
+        endpoint = `https://recipe-finder-backend-6wdh.onrender.com/users/register`;
+      }
+      const response = await axios.post(endpoint, formData);
       console.log("Register response:", response.data);
       // Handle successful register (e.g., redirect to dashboard)
       if (response.status === 200) {

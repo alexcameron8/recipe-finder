@@ -69,7 +69,18 @@ export function Login() {
     e.preventDefault();
     try {
       resetFormErrors();
-      const response = await axios.post("http://localhost:3000/users/login", {
+      let endpoint;
+      if (
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
+      ) {
+        // Code for development environment
+        endpoint = `http://localhost:3000/users/login`;
+      } else {
+        // Code for production environment
+        endpoint = `https://recipe-finder-backend-6wdh.onrender.com/users/login`;
+      }
+      const response = await axios.post(endpoint, {
         email: "user@demo.com",
         password: "Demo123!",
       });
@@ -95,10 +106,18 @@ export function Login() {
     e.preventDefault();
     try {
       resetFormErrors();
-      const response = await axios.post(
-        "http://localhost:3000/users/login",
-        formData,
-      );
+      let endpoint;
+      if (
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
+      ) {
+        // Code for development environment
+        endpoint = `http://localhost:3000/users/login`;
+      } else {
+        // Code for production environment
+        endpoint = `https://recipe-finder-backend-6wdh.onrender.com/users/login`;
+      }
+      const response = await axios.post(endpoint, formData);
 
       // Check status code for response
       if (response.status === 200) {
