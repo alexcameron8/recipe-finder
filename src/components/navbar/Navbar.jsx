@@ -71,17 +71,17 @@ export function Nav() {
                 to="/"
               >
                 <LuChefHat className="text-3xl max-md:text-2xl" />
-                &nbsp;RecipeApp
+                &nbsp;MyRecipe<span className="text-yellow-400">Seeker</span>
               </Link>
             </h2>
           </NavbarBrand>
           <NavbarContent
-            className=" hidden gap-10 max-md:gap-4  sm:flex"
+            className="hidden gap-10 max-lg:gap-4  sm:flex"
             justify="center"
           >
             <NavbarItem className="py-2" isActive={curTab === "home"}>
               <Link
-                className="flex flex-row items-center text-xl font-semibold max-md:text-lg"
+                className="flex flex-row items-center text-xl font-semibold max-md:text-base"
                 onClick={() => setCurTab("home")}
                 color="foreground"
                 to="/"
@@ -92,7 +92,7 @@ export function Nav() {
             </NavbarItem>
             <NavbarItem className="py-2" isActive={curTab === "search"}>
               <Link
-                className="flex flex-row items-center text-xl font-semibold max-md:text-lg"
+                className="flex flex-row items-center text-xl font-semibold max-md:text-base"
                 onClick={() => setCurTab("search")}
                 color="foreground"
                 to="/search"
@@ -107,7 +107,7 @@ export function Nav() {
             </NavbarItem>
             <NavbarItem className="py-2" isActive={curTab === "explore"}>
               <Link
-                className="flex flex-row items-center text-xl font-semibold max-md:text-lg"
+                className="flex flex-row items-center text-xl font-semibold max-md:text-base"
                 onClick={() => setCurTab("explore")}
                 to="/explore"
               >
@@ -118,7 +118,7 @@ export function Nav() {
             {currentUser && (
               <NavbarItem className="py-2" isActive={curTab === "my-recipes"}>
                 <Link
-                  className="flex flex-row items-center text-xl font-semibold max-md:text-lg"
+                  className="flex flex-row items-center text-xl font-semibold max-md:text-base"
                   onClick={() => setCurTab("my-recipes")}
                   color="foreground"
                   to="/my-recipes"
@@ -138,14 +138,14 @@ export function Nav() {
               <ProfileDropdown />
             ) : (
               <>
-                <NavbarItem className="hidden text-xl font-semibold max-md:text-lg sm:flex">
+                <NavbarItem className="hidden text-xl font-semibold max-md:text-base sm:flex">
                   <Link to="/login">Login</Link>
                 </NavbarItem>
                 <NavbarItem className="hidden text-xl sm:flex">
                   <Button
                     color="warning"
                     variant="flat"
-                    className="text-xl font-semibold max-md:text-lg"
+                    className="text-xl font-semibold max-md:text-base"
                   >
                     <Link to="/register">Sign Up</Link>
                   </Button>

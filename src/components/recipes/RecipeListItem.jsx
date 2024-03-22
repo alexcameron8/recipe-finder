@@ -3,12 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useCurrentUserResults } from "../App";
-import {
-  MdOutlineCookie,
-  MdOutlineDinnerDining,
-  MdOutlineBrunchDining,
-  MdOutlineFreeBreakfast,
-} from "react-icons/md";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { Chip, useDisclosure, CircularProgress, Card } from "@nextui-org/react";
 import { RecipeInfoModal } from "./RecipeInfoModal";
@@ -51,22 +45,38 @@ export function RecipeListItem({ recipe, isRecipeSaved }) {
     setIsSaving(true);
     if (!isSaved) {
       try {
+        let endpoint;
+        if (
+          window.location.hostname === "localhost" ||
+          window.location.hostname === "127.0.0.1"
+        ) {
+          // Code for development environment
+          endpoint = `http://localhost:3000/recipes/save`;
+        } else {
+          // Code for production environment
+          endpoint = `https://recipe-finder-backend-6wdh.onrender.com/recipes/save`;
+        }
         const data = { recipe: recipe, user: currentUser };
-        const response = await axios.post(
-          "http://localhost:3000/recipes/save",
-          data,
-        );
+        const response = await axios.post(endpoint, data);
         setIsSaving(false);
         setIsSaved((prev) => !prev);
       } catch (error) {
         // Handle save recipe error (e.g., display error message to user)
       }
     } else {
+      let endpoint;
+      if (
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
+      ) {
+        // Code for development environment
+        endpoint = `http://localhost:3000/recipes/remove`;
+      } else {
+        // Code for production environment
+        endpoint = `https://recipe-finder-backend-6wdh.onrender.com/recipes/remove`;
+      }
       const data = { recipe: recipe, user: currentUser };
-      const response = await axios.put(
-        "http://localhost:3000/recipes/remove",
-        data,
-      );
+      const response = await axios.put(endpoint, data);
       setIsSaving(false);
       setIsSaved((prev) => !prev);
     }

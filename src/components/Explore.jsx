@@ -1,6 +1,7 @@
 import { RecipeCarousel } from "./RecipeCarousel";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Nav } from "./navbar/Navbar";
 
 export function Explore() {
   const [featuredRecipes, setFeaturedRecipes] = useState([]);
@@ -11,9 +12,18 @@ export function Explore() {
     const fetchFeaturedRecipes = async () => {
       // Perform database query to fetch featured recipes
       try {
-        const response = await axios.get(
-          `http://localhost:3000/recipes/featured`,
-        );
+        let endpoint;
+        if (
+          window.location.hostname === "localhost" ||
+          window.location.hostname === "127.0.0.1"
+        ) {
+          // Code for development environment
+          endpoint = `http://localhost:3000/recipes/featured`;
+        } else {
+          // Code for production environment
+          endpoint = `https://recipe-finder-backend-6wdh.onrender.com/recipes/featured`;
+        }
+        const response = await axios.get(endpoint);
         // Set userSavedRecipes state with the fetched data
         setFeaturedRecipes(response.data);
       } catch (error) {
@@ -60,41 +70,44 @@ export function Explore() {
     );
 
   return (
-    <div className="flex flex-col items-center bg-orange-50 p-4">
-      <div className="overflow-hidden">
-        {/* <RecipeCarousel
+    <>
+      <Nav />
+      <div className="flex flex-col items-center bg-orange-50 p-4">
+        <div className="mx-4 max-w-screen-xl bg-orange-50 ">
+          {/* <RecipeCarousel
             header="Featured Recipes"
             subheader="Not sure what you are looking for? Check out some of these recipes!"
           /> */}
-        <RecipeCarousel
-          id="breakfast"
-          header="Breakfast"
-          subheader="Popular recipes enjoyed by others!"
-          data={featuredBreakfast}
-          isLoading={isLoading}
-        />
-        <RecipeCarousel
-          id="lunch-dinner"
-          header="Lunch & Dinner"
-          subheader="Popular lunch and dinner recipes enjoyed by others!"
-          data={featuredLunchDinner}
-          isLoading={isLoading}
-        />
-        <RecipeCarousel
-          id="brunch"
-          header="Brunch"
-          subheader="Popular breakfast recipes enjoyed by others!"
-          data={featuredBrunch}
-          isLoading={isLoading}
-        />
-        <RecipeCarousel
-          id="snacks"
-          header="Snacks"
-          subheader="Popular recipes enjoyed by others!"
-          data={featuredSnack}
-          isLoading={isLoading}
-        />
+          <RecipeCarousel
+            id="breakfast"
+            header="Breakfast"
+            subheader="Popular recipes enjoyed by others!"
+            data={featuredBreakfast}
+            isLoading={isLoading}
+          />
+          <RecipeCarousel
+            id="lunch-dinner"
+            header="Lunch & Dinner"
+            subheader="Popular lunch and dinner recipes enjoyed by others!"
+            data={featuredLunchDinner}
+            isLoading={isLoading}
+          />
+          <RecipeCarousel
+            id="brunch"
+            header="Brunch"
+            subheader="Popular breakfast recipes enjoyed by others!"
+            data={featuredBrunch}
+            isLoading={isLoading}
+          />
+          <RecipeCarousel
+            id="snacks"
+            header="Snacks"
+            subheader="Popular recipes enjoyed by others!"
+            data={featuredSnack}
+            isLoading={isLoading}
+          />
+        </div>
       </div>
-    </div>
+    </>
   );
 }

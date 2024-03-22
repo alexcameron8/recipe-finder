@@ -1,0 +1,70 @@
+/* the slides */
+/* .slick-slide {
+  margin: 0 10px;
+} */
+.slick-list {
+  padding-bottom: 1rem;
+}
+/* the parent */
+@media (min-width: 200px) {
+  .slick-list {
+    width: 400px;
+    align-items: center;
+    align-self: center;
+  }
+}
+@media (min-width: 400px) {
+  .slick-list {
+    width: 400px;
+  }
+}
+@media (min-width: 450px) {
+  .slick-list {
+    width: 400px;
+  }
+}
+@media (min-width: 500px) {
+  .slick-list {
+    width: 500px;
+  }
+}
+@media (min-width: 550px) {
+  .slick-list {
+    width: 550px;
+  }
+}
+@media (min-width: 600px) {
+  .slick-list {
+    width: 600px;
+  }
+}
+@media (min-width: 650px) {
+  .slick-list {
+    width: 650px;
+  }
+}
+@media (min-width: 750px) {
+  .slick-list {
+    width: 750px;
+  }
+}
+@media (min-width: 800px) {
+  .slick-list {
+    width: 800px;
+  }
+}
+@media (min-width: 850px) {
+  .slick-list {
+    width: 850px;
+  }
+}
+@media (min-width: 1000px) {
+  .slick-list {
+    width: 1000px;
+  }
+}
+@media (min-width: 1300px) {
+  .slick-list {
+    width: 1300px;
+  }
+}

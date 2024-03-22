@@ -1,9 +1,16 @@
 import { Divider, Spinner, Skeleton } from "@nextui-org/react";
-
+import footer_png from "/assets/footer/wave-haikei-footer.svg";
 export function Footer() {
   return (
     <div className="flex justify-center">
-      <footer className="w-full justify-center bg-gray-100 py-4 text-sm">
+      <footer
+        className="w-full justify-center bg-gray-100 py-4 text-sm"
+        // style={{
+        //   backgroundImage: `url(${footer_png})`, // Set the background image
+        //   backgroundSize: "cover", // Adjust background size as needed
+        //   backgroundPosition: "center", // Center the background image
+        // }}
+      >
         <p className=" flex items-center justify-center ">
           Designed & developed by Alex Cameron © 2024. Powered by{"\u00A0"}
           <a

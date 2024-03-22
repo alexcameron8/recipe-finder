@@ -6,6 +6,8 @@ import { MdOutlineEmail } from "react-icons/md";
 import { Spinner, Input, Button } from "@nextui-org/react";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { Link } from "react-router-dom";
+import { LuChefHat } from "react-icons/lu";
+import { Nav } from "../navbar/Navbar";
 
 export function Login() {
   const default_errors = {
@@ -68,7 +70,18 @@ export function Login() {
     e.preventDefault();
     try {
       resetFormErrors();
-      const response = await axios.post("http://localhost:3000/users/login", {
+      let endpoint;
+      if (
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
+      ) {
+        // Code for development environment
+        endpoint = `http://localhost:3000/users/login`;
+      } else {
+        // Code for production environment
+        endpoint = `https://recipe-finder-backend-6wdh.onrender.com/users/login`;
+      }
+      const response = await axios.post(endpoint, {
         email: "user@demo.com",
         password: "Demo123!",
       });
@@ -94,10 +107,18 @@ export function Login() {
     e.preventDefault();
     try {
       resetFormErrors();
-      const response = await axios.post(
-        "http://localhost:3000/users/login",
-        formData,
-      );
+      let endpoint;
+      if (
+        window.location.hostname === "localhost" ||
+        window.location.hostname === "127.0.0.1"
+      ) {
+        // Code for development environment
+        endpoint = `http://localhost:3000/users/login`;
+      } else {
+        // Code for production environment
+        endpoint = `https://recipe-finder-backend-6wdh.onrender.com/users/login`;
+      }
+      const response = await axios.post(endpoint, formData);
 
       // Check status code for response
       if (response.status === 200) {
@@ -152,6 +173,7 @@ export function Login() {
   };
   return (
     <>
+      <Nav />
       {isLoading ? (
         <div className=" flex h-screen min-h-screen flex-col items-center justify-center bg-orange-50">
           <Spinner size="md" />
@@ -159,12 +181,16 @@ export function Login() {
       ) : (
         <div className="flex h-min min-h-screen items-start justify-center bg-orange-50">
           <form
-            className="mt-5 w-2/3 rounded-2xl p-8 shadow-md"
+            className="mt-5 w-2/3 rounded-2xl bg-orange-100 p-8 shadow-md"
             onSubmit={handleSubmit}
           >
             <fieldset className="flex flex-col gap-2">
-              <h2 className="mb-6 text-center text-2xl font-semibold">
-                Welcome to <span className="font-bold">RecipeApp</span>
+              <h2 className="mb-6 flex flex-row items-center justify-center text-center text-2xl font-semibold ">
+                Welcome to&nbsp;
+                <span className="flex flex-row font-bold">
+                  <LuChefHat className="text-3xl max-md:text-2xl" />
+                  &nbsp;MyRecipe<span className="text-yellow-400">Seeker</span>
+                </span>
               </h2>
               {formErrors.email && (
                 <span className="ml-1 flex items-center text-xs font-medium tracking-wide text-red-500">

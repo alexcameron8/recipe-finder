@@ -17,11 +17,15 @@ babelRegister({
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://www.myrecipeseeker.com",
+];
 
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: allowedOrigins,
   }),
 );
 app.use(bodyParser.json());

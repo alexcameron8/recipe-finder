@@ -26,7 +26,7 @@ export function ProfileDropdown() {
       <button
         id="dropdownInformationButton"
         data-dropdown-toggle="dropdownInformation"
-        className="inline-flex items-center rounded-full p-0.5 text-center text-4xl font-medium text-white focus:bg-blue-300 "
+        className="inline-flex items-center rounded-full border-1 border-orange-200 bg-orange-100 p-0.5 text-center text-4xl font-medium text-white focus:bg-blue-300 "
         type="button"
         onClick={toggleDropdown} // Add onClick handler to toggle dropdown visibility
       >
@@ -35,7 +35,7 @@ export function ProfileDropdown() {
 
       <div
         id="dropdownInformation"
-        className={`absolute z-10 ${isOpen ? "block" : "hidden"} right-0 mr-1 w-44 divide-y divide-gray-100 rounded-lg bg-white shadow dark:divide-gray-600 dark:bg-gray-700`}
+        className={`absolute z-10 ${isOpen ? "block" : "hidden"} right-0 mr-1 w-44 divide-y divide-gray-100 rounded-lg border-1 border-orange-200 bg-orange-100 shadow`}
       >
         <div className="px-4 py-3 text-sm text-gray-900 dark:text-white">
           <div>{currentUser?.firstName + " " + currentUser?.lastName}</div>
