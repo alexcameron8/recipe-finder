@@ -82,11 +82,17 @@ export function FeaturedRecipeCard({ recipe, isRecipeSaved, isLoading }) {
   };
 
   return (
-    <Card isPressable isHoverable variant="bordered" className="h-full w-64">
+    <Card
+      isPressable
+      isHoverable
+      variant="bordered"
+      style={{ height: "450px" }}
+      className="flex w-64 flex-col justify-between"
+    >
       <CardHeader className="relative flex">
         <img
           src={recipe.image}
-          className="flex h-full items-center justify-center rounded-xl object-cover"
+          className="flex items-center justify-center rounded-xl object-cover"
           alt={recipe.name}
           onError={handleImageError}
         />
@@ -118,10 +124,10 @@ export function FeaturedRecipeCard({ recipe, isRecipeSaved, isLoading }) {
           </div>
         </div>
       </CardHeader>
-      <CardBody>
-        <div className="mx-2 text-base font-bold ">{recipe.name}</div>
+      <CardBody className="flex-grow">
+        <div className="mx-2 flex-grow text-base font-bold">{recipe.name}</div>
       </CardBody>
-      <CardFooter>
+      <CardFooter className="flex-grow">
         <div className="flex flex-wrap gap-1">
           {recipe.mealType && (
             <Chip
@@ -169,10 +175,13 @@ export function FeaturedRecipeCard({ recipe, isRecipeSaved, isLoading }) {
 /* eslint-disable react/prop-types */
 export function SkeletonRecipeCard() {
   return (
-    <Card isPressable isHoverable variant="bordered" className="h-full">
+    <Card isPressable isHoverable variant="bordered" className="h-96 w-64">
       <CardHeader className="relative flex">
         <Skeleton className="rounded-lg">
-          <img className="flex h-full items-center justify-center rounded-xl object-cover" />
+          <img
+            src="/assets/no-photo.png"
+            className="flex h-4/6 items-center justify-center rounded-xl object-cover"
+          />
         </Skeleton>
         <div className="flex flex-row items-center">
           <Skeleton className="rounded-lg">
@@ -196,19 +205,19 @@ export function SkeletonRecipeCard() {
       </CardHeader>
       <CardBody>
         <Skeleton className="rounded-lg">
-          <div className="mx-2 text-base font-bold "></div>
+          <div className="mx-2 text-base font-bold ">Skeleton</div>
         </Skeleton>
       </CardBody>
       <CardFooter>
-        <div className="flex flex-row">
-          <Skeleton className="rounded-lg">
-            <Chip>1</Chip>
+        <div className="flex flex-row gap-1">
+          <Skeleton className="w-full rounded-lg">
+            <Chip>Skeleton</Chip>
           </Skeleton>
-          <Skeleton className="rounded-lg">
-            <Chip>2</Chip>
+          <Skeleton className="w-full rounded-lg">
+            <Chip>Skeleton</Chip>
           </Skeleton>
-          <Skeleton className="rounded-lg">
-            <Chip>3</Chip>
+          <Skeleton className="w-full rounded-lg">
+            <Chip>Skeleton</Chip>
           </Skeleton>
         </div>
       </CardFooter>

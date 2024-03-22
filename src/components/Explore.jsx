@@ -70,7 +70,7 @@ export function Explore() {
 
   return (
     <div className="flex flex-col items-center bg-orange-50 p-4">
-      <div className="overflow-hidden">
+      <div className="max-w-screen-xl bg-orange-50">
         {/* <RecipeCarousel
             header="Featured Recipes"
             subheader="Not sure what you are looking for? Check out some of these recipes!"
