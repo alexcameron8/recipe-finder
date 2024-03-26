@@ -88,10 +88,13 @@ export function Login() {
 
       // Check status code for response
       if (response.status === 200) {
-        setCurrentUser(response.data);
+        console.log("TOKEN");
+        console.log(response.data.token);
+        localStorage.setItem("token", response.data.token);
+        setCurrentUser(response.data.data);
         addAlert(
           "success",
-          `Login success - Welcome back, ${response.data.firstName}.`,
+          `Login success - Welcome back, ${response.data.data.firstName}.`,
         );
         setIsLoading(false);
         navigate("/");

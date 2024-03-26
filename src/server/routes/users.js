@@ -1,10 +1,7 @@
 import { Router } from "express";
-import {
-  createUser,
-  findAllSavedRecipes,
-  findUser,
-} from "../server/connect.js";
-
+import { createUser, findAllSavedRecipes, findUser } from "../connect.js";
+import { createSecretToken } from "../middleware/auth/SecretToken.js";
+import userVerification from "../middleware/auth/auth.js";
 // Note: Create static routes to dynamic routes top to bottom
 const router = Router();
 
@@ -108,7 +105,7 @@ router.get("/:userId", async (req, res) => {
 
 router.post("/register", sanitizeRegisterInput, async (req, res) => {
   try {
-    console.log("Request body:", req.body);
+    // console.log("Request body:", req.body);
 
     const { email, password, firstName, lastName, confirmPassword } = req.body;
 
@@ -120,9 +117,15 @@ router.post("/register", sanitizeRegisterInput, async (req, res) => {
       confirmPassword,
     );
     if (result.status) {
-      res.status(200).send(result.data);
+      const token = createSecretToken(result.data.userId);
+      console.log(token);
+      res.cookie("token", token, {
+        withCredentials: true,
+        httpOnly: false,
+      });
+      res.status(200).send({ data: result.data, token: token });
     } else {
-      res.status(403).json({ error: "Registration failed - provide reason" });
+      res.status(403).json({ error: "Registration failed" });
     }
   } catch (error) {
     res.status(500).json({ error: "Unknown Error: Registration failed" });
@@ -136,8 +139,16 @@ router.post("/login", sanitizeLoginInput, async (req, res) => {
     const result = await findUser(email.toLowerCase(), password);
 
     if (result.status) {
+      //create secret token for active user session
+      const token = createSecretToken(result.data.userId);
+      console.log(token);
+      res.cookie("token", token, {
+        // withCredentials: true,
+        httpOnly: true,
+        maxAge: 3 * 24 * 60 * 60,
+      });
       //user successfully logged in
-      return res.status(200).send(result.data);
+      return res.status(200).send({ data: result.data, token: token });
     } else {
       //user unsuccessfully logged in
       return res.status(403).send(result.data);
@@ -149,7 +160,7 @@ router.post("/login", sanitizeLoginInput, async (req, res) => {
   }
 });
 
-router.get("/:userId/savedRecipes", async (req, res) => {
+router.get("/:userId/savedRecipes", userVerification, async (req, res) => {
   const userId = req.params.userId;
   try {
     const result = await findAllSavedRecipes(userId);

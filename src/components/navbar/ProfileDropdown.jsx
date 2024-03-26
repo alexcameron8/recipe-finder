@@ -18,6 +18,7 @@ export function ProfileDropdown() {
     setIsOpen(!isOpen);
   };
   function handleLogOut() {
+    localStorage.removeItem("token");
     setCurrentUser(null);
     addAlert("info", "Log out successful.");
   }

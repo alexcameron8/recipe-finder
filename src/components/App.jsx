@@ -43,14 +43,15 @@ function App() {
                 value={{ searchResults, setSearchResults }}
               >
                 <Routes>
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/register" element={<Register />} />
+                  <Route path="/recipe/:id" element={<RecipeInformation />} />
+
                   <Route path="/" element={<Home />} />
                   <Route path="/search" element={<SearchPage />} />
                   <Route path="/explore" element={<Explore />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="/login" element={<Login />} />
                   <Route path="/my-recipes" element={<UserRecipeList />} />
                   <Route path="/profile" element={<Profile />} />
-                  <Route path="/recipe/:id" element={<RecipeInformation />} />
                 </Routes>
                 {/* <Footer /> */}
               </SearchResultsContext.Provider>

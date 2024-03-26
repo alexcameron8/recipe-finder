@@ -4,7 +4,7 @@ import {
   updateArrayDocument,
   removeFromArrayDocument,
   findAllFeaturedRecipes,
-} from "../server/connect.js";
+} from "../connect.js";
 import axios from "axios";
 import fs from "fs";
 import { Storage } from "@google-cloud/storage";

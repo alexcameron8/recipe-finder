@@ -1,6 +1,6 @@
 import express from "express";
-import userRoutes from "./routes/users.js";
-import recipeRoutes from "./routes/recipes.js";
+import userRoutes from "./server/routes/users.js";
+import recipeRoutes from "./server/routes/recipes.js";
 import path from "path";
 import { fileURLToPath } from "url";
 import { createRequire } from "module";
@@ -25,6 +25,7 @@ const allowedOrigins = [
 const app = express();
 app.use(
   cors({
+    // credentials: true,
     origin: allowedOrigins,
   }),
 );

@@ -211,7 +211,7 @@ async function createUser(user_email, firstName, lastName, user_password) {
       addDocument("RecipeApp", "Users", new_user);
       return { status: true, data: new_user };
     } else {
-      console.log("Error user already exists! Error message!");
+      console.log("Error: User already exists!");
       return {
         status: false,
         data: {
@@ -239,7 +239,6 @@ async function findUser(user_email, user_password) {
     };
     // const cursor = collection.findOne(credentials);
     const user = await collection.findOne(filter);
-
     if (!user) {
       return {
         status: false,

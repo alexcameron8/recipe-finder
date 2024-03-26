@@ -79,6 +79,9 @@ export function Register() {
       }
       const response = await axios.post(endpoint, formData);
       console.log("Register response:", response.data);
+      console.log("NEWWWW TOKEN: ", response.token);
+      localStorage.setItem("token", response.token);
+
       // Handle successful register (e.g., redirect to dashboard)
       if (response.status === 200) {
         setCurrentUser(response.data);

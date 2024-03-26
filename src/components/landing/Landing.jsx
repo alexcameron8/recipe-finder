@@ -129,6 +129,14 @@ export function Landing() {
           <StepGuide />
           <Demo />
         </ParallaxLayer>
+        <ParallaxLayer
+          offset={3}
+          speed={0.05}
+          style={{
+            backgroundImage: `url(/assets/footer/wave-haikei-footer.svg)`,
+            backgroundSize: "cover",
+          }}
+        ></ParallaxLayer>
         {/* Sticky Footer */}
         <div className="absolute bottom-0 left-0 z-50 w-full bg-orange-50">
           <Footer />
