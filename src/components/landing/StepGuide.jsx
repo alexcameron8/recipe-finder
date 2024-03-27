@@ -6,20 +6,20 @@ import { Divider } from "@nextui-org/react";
 export function StepGuide() {
   return (
     // <div className="bg-gray-100">
-    <div className="flex flex-col items-center justify-center bg-orange-50 pb-7">
+    <div className="relative flex flex-col items-center justify-center bg-orange-50 pb-7">
       <Divider className="" />
       <div className="mb-10 flex w-full max-w-screen-xl flex-col items-center justify-center pt-7 ">
-        <h2 className="mb-10 text-3xl font-bold">
+        <h2 className="mb-10 text-3xl font-bold max-sm:text-xl">
           <span className="font-bold text-yellow-400">— &nbsp;</span>How it
           Works
         </h2>
-        <div className="flex flex-row gap-8 ">
+        <div className="flex flex-row gap-2 md:gap-8">
           <img
             className="ml-8 flex h-fit w-1/2 self-center rounded-md max-sm:hidden "
             src="/assets/cooking-pour.jpg"
             alt="steps-landing-cook"
           />
-          <div className="flex w-1/2 flex-col gap-12 max-sm:w-full">
+          <div className="flex w-1/2 flex-col gap-12 max-sm:w-full max-sm:px-4">
             <Step
               icon={<GrUserNew color="white" />}
               header="Sign Up"
@@ -64,13 +64,17 @@ export function Step({ icon, header, description, color }) {
         rounded-full
        ${color}
         p-5
-        text-3xl`}
+        text-3xl
+        max-sm:text-xl
+        `}
       >
         {icon}
       </div>
       <div className="flex flex-1 flex-col justify-center">
-        <h3 className="text-2xl font-bold">{header}</h3>
-        <p className="flex flex-wrap text-lg font-semibold">{description}</p>
+        <h3 className="text-2xl font-bold max-sm:text-xl">{header}</h3>
+        <p className="flex flex-wrap text-lg font-semibold max-md:text-base max-sm:text-sm">
+          {description}
+        </p>
       </div>
     </div>
   );

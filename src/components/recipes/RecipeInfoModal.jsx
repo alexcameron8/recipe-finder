@@ -55,67 +55,69 @@ export function RecipeInfoModal({
       placement="top"
       hideCloseButton={true}
     >
-      <ModalContent>
-        <ModalHeader className="flex flex-col gap-1">
-          <h2 className="mb-2 text-3xl font-bold max-sm:text-2xl">
-            {recipe.name ? recipe.name : recipe.label}
-          </h2>
-          <div className="absolute right-0 top-0 mr-4 mt-4 flex">
-            <button
-              className="flex items-center rounded-full p-1 text-3xl hover:bg-default"
-              onClick={handleSaveClick}
-            >
-              {isSaving ? (
-                <CircularProgress
-                  size="sm"
-                  color="danger"
-                  aria-label="Loading..."
-                />
-              ) : isSaved ? (
-                <IoMdHeart color="#f31260" />
-              ) : (
-                <IoMdHeartEmpty />
+      <ModalContent className="bg-orange-50">
+        <ModalHeader className="flex flex-col gap-1 ">
+          <div className="rounded-xl">
+            <h2 className="mb-2 text-3xl font-bold max-sm:text-2xl">
+              {recipe.name ? recipe.name : recipe.label}
+            </h2>
+            <div className="absolute right-0 top-0 mr-4 mt-4 flex">
+              <button
+                className="flex items-center rounded-full p-1 text-3xl hover:bg-default"
+                onClick={handleSaveClick}
+              >
+                {isSaving ? (
+                  <CircularProgress
+                    size="sm"
+                    color="danger"
+                    aria-label="Loading..."
+                  />
+                ) : isSaved ? (
+                  <IoMdHeart color="#f31260" />
+                ) : (
+                  <IoMdHeartEmpty />
+                )}
+              </button>
+            </div>
+            <div className="flex flex-wrap gap-1">
+              {recipe.mealType && (
+                <Chip
+                  className="font-medium max-md:text-xs"
+                  style={{
+                    backgroundColor: getMealColor(recipe.mealType[0]),
+                  }}
+                >
+                  {getMealName(recipe.mealType[0])}
+                </Chip>
               )}
-            </button>
-          </div>
-          <div className="flex flex-wrap gap-1">
-            {recipe.mealType && (
-              <Chip
-                className="font-medium max-md:text-xs"
-                style={{
-                  backgroundColor: getMealColor(recipe.mealType[0]),
-                }}
-              >
-                {getMealName(recipe.mealType[0])}
-              </Chip>
-            )}
-            {recipe.dishType && (
-              <Chip
-                style={{
-                  backgroundColor: getDishTypeColor(recipe.dishType[0]),
-                }}
-              >
-                <span className="flex flex-row items-center font-medium max-md:text-xs">
-                  <GiMeal /> &nbsp;
-                  {recipe.dishType[0].charAt(0).toUpperCase() +
-                    recipe.dishType[0].slice(1)}
-                </span>
-              </Chip>
-            )}
-            {recipe.cuisineType && (
-              <Chip
-                style={{
-                  backgroundColor: getCuisineTypeColor(recipe.cuisineType[0]),
-                }}
-              >
-                <span className="flex flex-row items-center font-medium max-md:text-xs">
-                  <IoEarthOutline />
-                  &nbsp;
-                  {recipe.cuisineType[0].charAt(0).toUpperCase() +
-                    recipe.cuisineType[0].slice(1)}
-                </span>
-              </Chip>
-            )}
+              {recipe.dishType && (
+                <Chip
+                  style={{
+                    backgroundColor: getDishTypeColor(recipe.dishType[0]),
+                  }}
+                >
+                  <span className="flex flex-row items-center font-medium max-md:text-xs">
+                    <GiMeal /> &nbsp;
+                    {recipe.dishType[0].charAt(0).toUpperCase() +
+                      recipe.dishType[0].slice(1)}
+                  </span>
+                </Chip>
+              )}
+              {recipe.cuisineType && (
+                <Chip
+                  style={{
+                    backgroundColor: getCuisineTypeColor(recipe.cuisineType[0]),
+                  }}
+                >
+                  <span className="flex flex-row items-center font-medium max-md:text-xs">
+                    <IoEarthOutline />
+                    &nbsp;
+                    {recipe.cuisineType[0].charAt(0).toUpperCase() +
+                      recipe.cuisineType[0].slice(1)}
+                  </span>
+                </Chip>
+              )}
+            </div>
           </div>
         </ModalHeader>
         <ModalBody>
@@ -126,7 +128,7 @@ export function RecipeInfoModal({
               alt={recipe.name ? recipe.name : recipe.label}
               onError={handleImageError}
             />
-            <div className="flex-1">
+            <div className="flex-1 rounded-xl bg-orange-50 p-2">
               <h3 className="font-medium underline">Ingredients List</h3>
               <ol className="my-1 list-inside list-decimal">
                 {recipe.ingredientLines.map((ingredient, index) => (
@@ -137,7 +139,7 @@ export function RecipeInfoModal({
               </ol>
             </div>
           </div>
-          <div className="min-h-screen w-full rounded-t-xl bg-white">
+          <div className="min-h-screen w-full rounded-t-xl bg-orange-50 p-2">
             {/* <h2 className="mb-2 text-3xl font-bold">{recipe.name}</h2> */}
             <h3 className="font-medium">Author: {recipe.source}</h3>
             <hr className="my-3 h-0.5 rounded border-0 bg-gray-600" />

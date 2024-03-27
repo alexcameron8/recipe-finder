@@ -94,7 +94,7 @@ export function RecipeCarousel({ header, subheader, data, isLoading }) {
       <h6 className="mb-4 text-sm font-thin max-sm:ml-2 max-sm:flex max-sm:justify-center">
         {subheader}
       </h6>
-      <div className="">
+      <div className="py-4">
         <Slider
           ref={(slider) => {
             sliderRef = slider;

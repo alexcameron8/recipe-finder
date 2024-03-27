@@ -94,7 +94,7 @@ export function FeaturedRecipeCard({ recipe, isRecipeSaved, isLoading }) {
         isHoverable
         variant="bordered"
         style={{ height: "450px" }}
-        className="flex w-64 flex-col justify-between"
+        className="flex w-64 flex-col justify-between "
       >
         <CardHeader className="relative flex">
           <img
