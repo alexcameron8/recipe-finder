@@ -12,13 +12,13 @@ export function Cover() {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center bg-orange-50 pb-7">
+      <div className="relative flex flex-col items-center justify-center bg-orange-50 pb-7">
         <Divider className="" />
-        <div className="mb-10 flex w-full max-w-screen-xl flex-row pt-7 max-sm:flex-col max-sm:items-center max-sm:justify-center">
+        <div className="mb-10 flex w-full max-w-screen-xl flex-row pt-7 max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:px-4">
           <div className=" mx-8 flex w-1/2 flex-col items-center justify-center max-sm:w-full">
             <h2 className="mb-4 self-start text-4xl font-bold max-sm:text-2xl">
-              Enjoy recipes from all
-              <br />
+              Enjoy recipes from all&#xA0;
+              <br className="max-sm:hidden" />
               over<span className="text-yellow-400"> the world</span>
             </h2>
             <p className="flex flex-wrap text-lg font-semibold max-sm:mb-4 max-sm:text-sm">

@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom";
-import { useCurrentUserResults, useCurrentTabContext } from "../App";
+import {
+  useCurrentUserResults,
+  useCurrentTabContext,
+  useAlertsContext,
+} from "../App";
 import { ProfileDropdown } from "./ProfileDropdown";
 import { LuChefHat } from "react-icons/lu";
 import {
@@ -27,6 +31,8 @@ export function Nav() {
   const { currentUser, setCurrentUser } = useCurrentUserResults();
   const { curTab, setCurTab } = useCurrentTabContext();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { alerts, setAlerts } = useAlertsContext();
+
   // const [curTab, setCurTab] = useState("home");
   const menuItems = [
     "Home",
@@ -34,8 +40,30 @@ export function Nav() {
     "Explore",
     "Profile Settings",
     "Help & Feedback",
+    "Login",
+    "Register",
     "Log Out",
   ];
+  const menuItemsLinks = {
+    Home: "/",
+    Search: "/search",
+    Explore: "/explore",
+    "Profile Settings": "/profile",
+    "Help & Feedback": "/help",
+    Login: "/login",
+    Register: "/register",
+    "Log Out": "/login",
+  };
+
+  const addAlert = (type, message) => {
+    const newAlerts = [...alerts, { type, message }];
+    setAlerts(newAlerts);
+  };
+
+  function handleLogOut() {
+    setCurrentUser(null);
+    addAlert("info", "Log out successful.");
+  }
 
   return (
     <>
@@ -154,24 +182,28 @@ export function Nav() {
             )}
           </NavbarContent>
           <NavbarMenu>
-            {menuItems.map((item, index) => (
-              <NavbarMenuItem key={`${item}-${index}`}>
-                <Link
-                  color={
-                    index === 2
-                      ? "primary"
-                      : index === menuItems.length - 1
-                        ? "danger"
-                        : "foreground"
-                  }
-                  className="w-full"
-                  href="#"
-                  size="lg"
-                >
-                  {item}
-                </Link>
-              </NavbarMenuItem>
-            ))}
+            {menuItems.map((item, index) => {
+              return (
+                <NavbarMenuItem key={`${item}-${index}`}>
+                  <Link
+                    color={
+                      index === 2
+                        ? "primary"
+                        : index === menuItems.length - 1
+                          ? "danger"
+                          : "foreground"
+                    }
+                    className="w-full"
+                    href="#"
+                    size="lg"
+                    onClick={item === "Log Out" ? handleLogOut : ""}
+                    to={menuItemsLinks[item]}
+                  >
+                    {item}
+                  </Link>
+                </NavbarMenuItem>
+              );
+            })}
           </NavbarMenu>
         </Navbar>
       </div>
