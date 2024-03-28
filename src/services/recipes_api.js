@@ -3,12 +3,44 @@ const fetchRecipes = async (recipeQuery, healthFilters) => {
   const REACT_APP_APPLICATION_ID = import.meta.env.VITE_APPLICATION_ID;
 
   try {
+    // Separate health filters into three arrays based on filter types
+    const healthLabelFilters = healthFilters
+      .filter((filter) => filter.filterType === "healthLabel")
+      .map((filter) => filter.filter.toLowerCase());
+    const mealTypeFilters = healthFilters
+      .filter((filter) => filter.filterType === "mealType")
+      .flatMap((filter) => {
+        const filterValue = filter.filter.toLowerCase();
+        if (filterValue === "lunch/dinner") {
+          return ["lunch", "dinner"];
+        }
+        return filterValue;
+      });
+    const dishTypeFilters = healthFilters
+      .filter((filter) => filter.filterType === "dishType")
+      .map((filter) => filter.filter.toLowerCase());
+
     let query = `https://api.edamam.com/api/recipes/v2?type=public&q=${recipeQuery}&app_id=${REACT_APP_APPLICATION_ID}&app_key=${REACT_APP_API_KEY}`;
-    if (healthFilters.length !== 0) {
-      const health_query = healthFilters
+
+    if (healthLabelFilters.length > 0) {
+      const healthLabelQuery = healthLabelFilters
         .map((filter) => `&health=${filter}`)
         .join("");
-      query = query + health_query;
+      query += healthLabelQuery;
+    }
+
+    if (mealTypeFilters.length > 0) {
+      const mealTypeQuery = mealTypeFilters
+        .map((filter) => `&mealType=${filter}`)
+        .join("");
+      query += mealTypeQuery;
+    }
+
+    if (dishTypeFilters.length > 0) {
+      const dishTypeQuery = dishTypeFilters
+        .map((filter) => `&dishType=${filter}`)
+        .join("");
+      query += dishTypeQuery;
     }
 
     const response = await fetch(query);

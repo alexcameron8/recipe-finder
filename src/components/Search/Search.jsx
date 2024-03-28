@@ -15,22 +15,22 @@ export function Search() {
   const handleSearch = async (e) => {
     e.preventDefault();
     setShowFilters(false);
+    console.log(isSelected);
     const recipes = await fetchRecipes(recipeQuery, isSelected);
     setSearchResults(recipes);
     localStorage.setItem("searchResults", JSON.stringify(recipes));
   };
 
-  const handleLiClick = (apiParameter) => {
-    setIsSelected((prevSelected) => {
-      // Check if the dietary restriction is already in filter
-      if (prevSelected.includes(apiParameter)) {
-        // Remove the item
-        return prevSelected.filter((item) => item !== apiParameter);
-      } else {
-        // No action needed if the item is not in the list
-        return prevSelected;
-      }
-    });
+  const handleLiClick = (filter) => {
+    setIsSelected((prevSelected) =>
+      prevSelected.filter(
+        (item) =>
+          !(
+            item.filter === filter.filter &&
+            item.filterType === filter.filterType
+          ),
+      ),
+    );
   };
 
   function resetFilters() {
@@ -90,13 +90,13 @@ export function Search() {
               )}
             </h4>
             <ul className="mb-1 flex flex-wrap justify-center gap-1">
-              {isSelected?.map((filters) => (
+              {isSelected?.map((filter) => (
                 <li
-                  className="flex flex-row items-center rounded-lg border-2 border-solid border-black px-1 py-0.5 text-xs font-medium hover:cursor-pointer hover:brightness-110"
-                  key={`tag-${filters}`}
-                  onClick={() => handleLiClick(filters)}
+                  className="flex flex-row items-center rounded-full border-2 border-solid border-black px-2 py-0.5 text-xs font-medium hover:cursor-pointer hover:brightness-110"
+                  key={`tag-${filter.filter}`}
+                  onClick={() => handleLiClick(filter)}
                 >
-                  <IoMdClose /> {filters}
+                  <IoMdClose /> {filter.filter}
                 </li>
               ))}
             </ul>

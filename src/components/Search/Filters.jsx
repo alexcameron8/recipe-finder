@@ -291,18 +291,21 @@ export function Filters({ isSelected, setIsSelected, resetFilters }) {
           filter_data={healthLabels.map((label) => label.webLabel)}
           isSelected={isSelected}
           setIsSelected={setIsSelected}
+          filterType="healthLabel"
         />
         <Filter
           filter_name="Meal Types"
           filter_data={mealTypes}
           isSelected={isSelected}
           setIsSelected={setIsSelected}
+          filterType="mealType"
         />
         <Filter
           filter_name="Dish Types"
           filter_data={dishTypes}
           isSelected={isSelected}
           setIsSelected={setIsSelected}
+          filterType="dishType"
         />
       </div>
     </div>

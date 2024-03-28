@@ -76,7 +76,7 @@ export const dishTypes = [
   "Pasta",
   "Pastry",
   "Pies and Tarts",
-  "pizza",
+  "Pizza",
   "Preps",
   "Preserve",
   "Salad",
