@@ -8,9 +8,9 @@ The intended goal of this project is to develop a tool that can make day to day 
 [![Website Status](https://img.shields.io/website?url=https%3A%2F%2Fwww.myrecipeseeker.com)](https://www.myrecipeseeker.com)
 
 ### Problem Statement 🧩
-
+Develop a robust and user-friendly Recipe Seeker application to enhance collaboration and discovery of new recipes.
 ### Solution 💡
-
+--
 ### Technologies Used 💻
 
 Front end: React.js, TailwindcssCSS, NextUI Component Library
